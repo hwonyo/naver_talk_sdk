@@ -1,0 +1,12 @@
+# Created by .ignore support plugin (hsz.mobi)
+*.pyc
+.idea/
+Dockerfile
+setup.cfg
+/dist
+/*.egg-info
+/docs/_build
+Gemfile
+/docs/_build
+py2/
+/dist
