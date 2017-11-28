@@ -27,7 +27,7 @@ class TestNaverTalkApi(unittest.TestCase):
             'options': {
                 'inflow': 'list',
                 'referer': 'https://example.com',
-                'friend': False,
+                'friend': True,
                 'under14': False,
                 'under19': False
             }
@@ -41,6 +41,7 @@ class TestNaverTalkApi(unittest.TestCase):
             self.assertEqual('https://example.com', event.referer)
             self.assertFalse(event.under_14)
             self.assertFalse(event.under_19)
+            self.assertTrue(event.friend)
             counter1()
 
         self.tested.webhook_handler(json.dumps(event))
@@ -83,7 +84,7 @@ class TestNaverTalkApi(unittest.TestCase):
         self.tested.webhook_handler(json.dumps(event))
         self.assertEqual(counter.call_count, 1)
 
-    def test_send_event(self):
+    def test_send_event_text(self):
         event = {
             'event': 'send',
             'user': 'test_user_id',
@@ -103,6 +104,28 @@ class TestNaverTalkApi(unittest.TestCase):
             self.assertEqual('test_code', event.code)
             self.assertEqual('typing', event.input_type)
             self.assertTrue(event.is_code)
+            counter()
+
+        self.tested.webhook_handler(json.dumps(event))
+        self.assertEqual(counter.call_count, 1)
+
+
+    def test_send_event_image(self):
+        event = {
+            'event': 'send',
+            'user': 'test_user_id',
+            'imageContent': {
+                'imageUrl': 'https://test.image.jpg'
+            }
+        }
+        counter = mock.MagicMock()
+
+        @self.tested.handle_send
+        def send_handler(event):
+            self.assertTrue(isinstance(event, SendEvent))
+            self.assertEqual('test_user_id', event.user_id)
+            self.assertEqual('https://test.image.jpg', event.image_url)
+            self.assertIsNone(event.text)
             counter()
 
         self.tested.webhook_handler(json.dumps(event))
@@ -155,6 +178,7 @@ class TestNaverTalkApi(unittest.TestCase):
             self.assertEqual('test_won_yo', event.nickname)
             self.assertEqual('01012345678', event.cellphone)
             self.assertEqual({'road_addr': 'Seoul'}, event.address)
+            self.assertEqual('SUCCESS', event.result)
             counter()
 
         self.tested.webhook_handler(json.dumps(event))
@@ -182,6 +206,7 @@ class TestNaverTalkApi(unittest.TestCase):
             self.assertEqual('test-payment-id', event.payment_id)
             self.assertEqual('test_merchant-pay-key', event.merchant_pay_key)
             self.assertEqual('test-merchant-user-key', event.merchant_user_key)
+            self.assertIsNone(event.message)
             counter()
 
         self.tested.webhook_handler(json.dumps(event))
