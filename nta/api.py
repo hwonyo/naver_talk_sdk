@@ -22,9 +22,9 @@ class WebhookParser(object):
         :return:
         """
         if not PY3:
-            req_json = json.loads(req)
-        else:
             req_json = json.loads(req, object_hook=_byteify)
+        else:
+            req_json = json.loads(req)
 
         event_type = req_json['event']
         if event_type == 'open':
