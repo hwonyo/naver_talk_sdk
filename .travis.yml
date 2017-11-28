@@ -8,6 +8,7 @@ install:
   - pip install nose
   - pip install mock
   - pip install coveralls
+  - pip install responses
 script: nosetests --with-coverage --cover-package=nta
 after_success:
   coveralls
