@@ -96,6 +96,12 @@ class TestNaverTalkApi(unittest.TestCase):
             self.assertEqual(e.result_code, "IMG-99")
             self.assertEqual(e.message, "이미지 업로드 중 에러")
 
+    def test_callback_error(self):
+        with self.assertRaises(ValueError):
+            @self.tested.callback('Hello')
+            def callback_test(event):
+                pass
+
 
 if __name__ == '__main__':
     unittest.main()

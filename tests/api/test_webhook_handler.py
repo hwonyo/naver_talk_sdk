@@ -297,6 +297,49 @@ class TestNaverTalkApi(unittest.TestCase):
         self.tested.webhook_handler(json.dumps(event2))
         self.assertEqual(counter1.call_count, 1)
 
+    def test_unknown_event(self):
+        event = {
+            'event': 'unknown'
+        }
+        counter = mock.MagicMock()
+
+        @self.tested.handle_open
+        def handle_open(event):
+            counter()
+
+        @self.tested.handle_leave
+        def handle_open(event):
+            counter()
+
+        @self.tested.handle_send
+        def handle_open(event):
+            counter()
+
+        @self.tested.handle_friend
+        def handle_open(event):
+            counter()
+
+        @self.tested.handle_echo
+        def handle_open(event):
+            counter()
+
+        @self.tested.handle_pay_complete
+        def handle_open(event):
+            counter()
+
+        @self.tested.handle_pay_confirm
+        def handle_open(event):
+            counter()
+
+        @self.tested.handle_profile
+        def handle_open(event):
+            counter()
+
+
+        self.tested.webhook_handler(json.dumps(event))
+        self.assertEqual(counter.call_count, 0)
+
+
 
 if __name__ == '__main__':
     unittest.main()
