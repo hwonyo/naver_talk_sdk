@@ -16,7 +16,7 @@ class TestUtils(unittest.TestCase):
         if not PY3:
             self.assertEqual(_byteify(u'test'), str('test'))
             self.assertEqual(_byteify([u'test', u'test2']), [str('test'), str('test2')])
-            self.assertEqual(_byteify())
+            self.assertEqual(_byteify({u'test_key': u'test_value'}), {str('test_key'): str('test_value')})
 
 
 if __name__ == '__main__':
