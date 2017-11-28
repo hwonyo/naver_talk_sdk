@@ -58,26 +58,26 @@ class Base(object):
         :return: dict
         """
         data = {}
-        for key in self.__dict__.keys():
+        for key, sub_obj in self.__dict__.items():
             camel_key = utils.to_camel_case(key)
-            if isinstance(getattr(self, key, None), (list, tuple, set)):
+            if isinstance(sub_obj, (list, tuple, set)):
                 data[camel_key] = list()
-                for sub_obj in getattr(self, key, None):
-                    if hasattr(sub_obj, 'as_json_dict'):
-                        data[camel_key].append(sub_obj.as_json_dict())
-                    elif isinstance(sub_obj, dict):
-                        data[camel_key].append(self.convert_dict_to_camel_case(sub_obj))
+                for obj in sub_obj:
+                    if hasattr(obj, 'as_json_dict'):
+                        data[camel_key].append(obj.as_json_dict())
+                    elif isinstance(obj, dict):
+                        data[camel_key].append(self.convert_dict_to_camel_case(obj))
                     else:
-                        data[camel_key].append(sub_obj)
+                        data[camel_key].append(obj)
 
-            elif isinstance(getattr(self, key, None), dict):
-                data[camel_key] = self.convert_dict_to_camel_case(getattr(self, key))
+            elif isinstance(sub_obj, dict):
+                data[camel_key] = self.convert_dict_to_camel_case(sub_obj)
 
-            elif hasattr(getattr(self, key, None), 'as_json_dict'):
-                data[camel_key] = getattr(self, key).as_json_dict()
+            elif hasattr(sub_obj, 'as_json_dict'):
+                data[camel_key] = sub_obj.as_json_dict()
 
             else:
-                data[camel_key] = getattr(self, key, None)
+                data[camel_key] = sub_obj
 
         return data
 
@@ -117,44 +117,3 @@ class Base(object):
                         for key, value in data.items()}
             return new_data
         return data
-
-    @staticmethod
-    def get_or_new_from_json_dict(data, cls):
-        """Get `cls` object w/ deserialization from json if needed.
-        If data is instance of cls, return data.
-        Else if data is instance of dict, create instance from dict.
-        Else, return None.
-        :param data:
-        :param cls:
-        :rtype: object
-        :return:
-        """
-        if isinstance(data, cls):
-            return data
-        elif isinstance(data, dict):
-            return cls.new_from_json_dict(data)
-
-        return None
-
-    @staticmethod
-    def get_or_new_from_json_dict_with_types(
-            data, cls_map, type_key='type'
-    ):
-        """Get `cls` object w/ deserialization from json by using type key hint if needed.
-        If data is instance of one of cls, return data.
-        Else if data is instance of dict, create instance from dict.
-        Else, return None.
-        :param data:
-        :param cls_map:
-        :param type_key:
-        :rtype: object
-        :return:
-        """
-        if isinstance(data, tuple(cls_map.values())):
-            return data
-        elif isinstance(data, dict):
-            type_val = data[type_key]
-            if type_val in cls_map:
-                return cls_map[type_val].new_from_json_dict(data)
-
-        return None

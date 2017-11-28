@@ -38,8 +38,6 @@ class GenericPayload(Payload):
             self.text_content = message
         elif isinstance(message, ImageContent):
             self.image_content = message
-        elif isinstance(message, ImageContent):
-            self.imageContent = message
         elif isinstance(message, CompositeContent):
             self.compositeContent = message
         else:
@@ -65,7 +63,7 @@ class ProfilePayload(Payload):
         return self.options.get('field')
 
     @property
-    def agreemetns(self):
+    def agreements(self):
         return self.options.get('agreements')
 
 

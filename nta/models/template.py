@@ -64,7 +64,8 @@ class Composite(BaseTemplate):
 
         self.title = title
         self.description = description
-        self.image = ImageContent(image)
+        if image is not None:
+            self.image = ImageContent(image)
         self.element_list = element_list
         self.button_list = Buttons.convert_shortcut_buttons(button_list)
 

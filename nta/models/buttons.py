@@ -14,7 +14,7 @@ class Buttons(Base):
                 if isinstance(item, Buttons):
                     result.append(item)
                 elif isinstance(item, dict):
-                    if item.get('type') in ['TEXT', 'LINK', 'OPTION']:
+                    if item.get('type') in ['TEXT', 'LINK', 'OPTION', 'PAY']:
                         type = item.get('type')
                         title = item.get('title')
                         value = item.get('value', item.get('url', item.get('code', item.get('buttons'))))
@@ -26,6 +26,8 @@ class Buttons(Base):
                             result.append(ButtonLink(title=title, url=value, mobile_url=moburl))
                         elif type == 'OPTION':
                             result.append(ButtonOption(title=title, button_list=value))
+                        elif type == 'PAY':
+                            result.append(ButtonPay(payment_info=value))
 
                     else:
                         raise ValueError('Invalid button type')
@@ -65,7 +67,7 @@ class ButtonOption(Buttons):
         super(ButtonOption, self).__init__(**kwargs)
 
         if not isinstance(button_list, list):
-            button_list = list(button_list)
+            button_list = [button_list]
         self.type = "OPTION"
         self.data = {
             "title":title,
@@ -75,6 +77,9 @@ class ButtonOption(Buttons):
 
 class ButtonPay(Buttons):
     def __init__(self, payment_info, **kwargs):
-        super(ButtonPay, self).__init__(self, **kwargs)
+        super(ButtonPay, self).__init__(**kwargs)
 
-        self.payment_info = payment_info
+        self.type = 'PAY'
+        self.data = {
+            'payment_info': payment_info
+        }
