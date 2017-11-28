@@ -13,7 +13,7 @@ from nta import (
 )
 from nta.models import(
     CompositeContent, Composite, ElementData, ElementList,
-    ButtonText
+    ButtonText, ButtonLink, QuickReply
 )
 
 
@@ -105,3 +105,93 @@ class TestNaverTalkAPI(unittest.TestCase):
             callback=test_callback
         )
         self.assertEqual(counter.call_count, 1)
+
+    @responses.activate
+    def test_send_composite_with_quick_reply(self):
+        responses.add(
+            responses.POST,
+            NaverTalkApi.DEFAULT_API_ENDPOINT,
+            json={
+                "success": True,
+                "resultCode": "00"
+            },
+            status=200
+        )
+
+        counter = mock.MagicMock()
+
+        def test_callback(res, payload):
+            self.assertEqual(res.result_code, "00")
+            self.assertEqual(res.success, True)
+            self.assertEqual(
+                payload.as_json_dict(),
+                {
+                    'event': 'send',
+                    'user': 'test_user_id',
+                    'compositeContent': {
+                        'compositeList': [
+                            {
+                                'title': 'test_title',
+                                'description': None,
+                                'elementList': None,
+                                'buttonList': None
+                            }
+                        ],
+                        'quickReply': {
+                            'buttonList': [{
+                                'data': {
+                                    'code': 'PAYLOAD',
+                                    'title': 'text'},
+                                'type': 'TEXT'},
+                                {
+                                    'data': {
+                                        'mobileUrl': None,
+                                        'title': 'text',
+                                        'url': 'PAYLOAD'},
+                                    'type': 'LINK'}]}
+
+                    },
+                    'options': {
+                        'notification': False
+                    }
+                }
+            )
+            counter()
+
+        self.tested.send(
+            'test_user_id',
+            message=CompositeContent(
+                composite_list=[
+                    Composite(
+                        title='test_title'
+                    )
+                ]
+            ),
+            quick_replies=QuickReply(
+                [
+                    {'type': 'TEXT', 'title': 'text', 'value': 'PAYLOAD'},
+                    {'type': 'LINK', 'title': 'text', 'value': 'PAYLOAD'}
+                ]
+            ),
+            callback=test_callback
+        )
+        self.assertEqual(counter.call_count, 1)
+
+        self.tested.send(
+            'test_user_id',
+            message=CompositeContent(
+                composite_list=[
+                    Composite(
+                        title='test_title'
+                    )
+                ]
+            ),
+            quick_replies=QuickReply(
+                [
+                    ButtonText('text', 'PAYLOAD'),
+                    ButtonLink('text', 'PAYLOAD')
+                ]
+            ),
+            callback=test_callback
+        )
+        self.assertEqual(counter.call_count, 2)
