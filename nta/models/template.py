@@ -107,13 +107,35 @@ class QuickReply(Base):
 
 class PaymentInfo(Base):
     def __init__(
-            self, merchant_pay_key, total_pay_amount, product_items,
-            merchant_user_key=None, product_name=None,
-            product_count=None, delivery_fee=None,
-            tax_scope_amount=None, tax_ex_scope_amount=None,
-            purchaser_name=None, purchaser_birthday=None,
+            self,
+            merchant_pay_key,
+            total_pay_amount,
+            product_items,
+            merchant_user_key=None,
+            product_name=None,
+            product_count=None,
+            delivery_fee=None,
+            tax_scope_amount=None,
+            tax_ex_scope_amount=None,
+            purchaser_name=None,
+            purchaser_birthday=None,
             **kwargs
     ):
+        """__init__ method.
+
+        :param merchant_pay_key:
+        :param total_pay_amount:
+        :param product_items:
+        :param merchant_user_key:
+        :param product_name:
+        :param product_count:
+        :param delivery_fee:
+        :param tax_scope_amount:
+        :param tax_ex_scope_amount:
+        :param purchaser_name:
+        :param purchaser_birthday:
+        :param kwargs:
+        """
         super(PaymentInfo, self).__init__(**kwargs)
 
         self.merchant_pay_key = merchant_pay_key
@@ -131,10 +153,29 @@ class PaymentInfo(Base):
 
 class ProductItem(Base):
     def __init__(
-            self, category_type, category_id, uid, name,
-            start_date=None, end_date=None, seller_id=None, count=None,
+            self,
+            category_type,
+            category_id,
+            uid,
+            name,
+            start_date=None,
+            end_date=None,
+            seller_id=None,
+            count=None,
             **kwargs
     ):
+        """__init__ method.
+
+        :param category_type:
+        :param category_id:
+        :param uid:
+        :param name:
+        :param start_date:
+        :param end_date:
+        :param seller_id:
+        :param count:
+        :param kwargs:
+        """
         super(ProductItem, self).__init__(**kwargs)
 
         self.category_type = category_type
