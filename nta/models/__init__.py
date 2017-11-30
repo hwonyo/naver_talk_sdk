@@ -25,6 +25,8 @@ from .template import (
     ElementList,
     ElementData,
     QuickReply,
+    PaymentInfo,
+    ProductItem
 )
 from .events import (
     OpenEvent,
