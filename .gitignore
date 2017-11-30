@@ -2,7 +2,7 @@
 *.pyc
 .idea/
 Dockerfile
-setup.cfg
+setup.*
 /dist
 /*.egg-info
 /docs/_build

@@ -13,7 +13,10 @@ class BaseTemplate(Base):
 
         if quick_reply:
             self.quick_reply = {}
-            self.quick_reply['button_list'] = QuickReply(quick_reply)
+            if isinstance(quick_reply, list):
+                self.quick_reply['button_list'] = QuickReply(quick_reply)
+            elif isinstance(quick_reply, QuickReply):
+                self.quick_reply['button_list'] = quick_reply
 
 
 class TextContent(BaseTemplate):
