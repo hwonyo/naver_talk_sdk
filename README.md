@@ -8,7 +8,7 @@ SDK of the NAVER TALK API for Python
 
 # About the NAVERTALK Messaging API
 
-#### Inspired By : [fbmq](https://github.com/conbus/fbmq) and [line-bot-sdk](https://github.com/line/line-bot-sdk-python>)
+__Inspired By : [fbmq](https://github.com/conbus/fbmq) and [line-bot-sdk](https://github.com/line/line-bot-sdk-python)__
 
 ## Install
 ```
@@ -65,14 +65,82 @@ def send_handler(event):
 ```
 
 ## API
+
+* All attributes in Instances is same with snake case of the key name in json request from navertalk.
+* See more info: [Naver Talk Github Page](https://github.com/navertalk/chatbot-api)
+
 ### NaverTalkApi
 Create a new NaverTalk instance
 ```python
 ntalk = nta.NaverTalkApi('YOUR_NAVER_TALK_ACCESS_TOKEN')
 ``` 
 
-##### send(self, user_id, message, quick_replies=None, notification=False, callback=None)
-send a message, to user with user_id
+#### handler
+
+Handle event from user with decorators
+
+The decorated Function gets [Event](##event) paramemter
+
+__@handle_open__
+
+Open Event Handler
+
+__@handle_send__
+
+Send Event Handler
+
+__@handle_leave__
+
+Leave Event Handler
+
+__@handle_friend__
+
+Friend Event Handler
+
+__@handle_profile__
+
+Profile Event Handler
+
+__@handle_pay_complete__
+
+PayComplete Event Handler
+
+__@handle_pay_confirm__
+
+PayConfirm Event Handler
+
+__@handle_echo__
+
+Echo Event Handler
+
+__@handle_before_process__
+
+Ahead of all event handler
+
+__@after_send__
+
+Handler triggered after sending for each message to user
+
+With two parameters [Response](###Response) and [Payload](###Payload) 
+
+__example__
+```python
+@ntalk.handle_send
+def send_handler_function(event):
+    user_id = event.user_id
+    text = event.text
+    
+@ntalk.after_send
+def do_something_after_send_for_each_message(res, payload):
+    # do something you want
+    pass
+```
+
+
+
+#### 
+__send(self, user_id, message, quick_replies=None, notification=False, callback=None)__
+
  
 
 
