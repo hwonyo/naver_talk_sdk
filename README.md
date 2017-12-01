@@ -147,7 +147,7 @@ def calback_handler(event):
     
 @ntalk.callback(['(^Hello).*'])
 def hello_callback_handler(event):
-    # This function will be triggered when a user hit the button contains code value is Hello
+    # This function will be triggered when a user hit the button contains code value starts with Hello
     code = event.code # ex) Hello Naver
 ```
 
