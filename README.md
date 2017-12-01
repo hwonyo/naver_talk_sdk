@@ -59,7 +59,7 @@ def send_handler(event):
     text = event.text
     ntalk.send(
         user_id,
-        "Echo Message:" % text
+        "Echo Message: %s" % text
     )
 
 ```
@@ -138,8 +138,45 @@ def do_something_after_send_for_each_message(res, payload):
 
 
 
-#### 
+#### Send a message
 __send(self, user_id, message, quick_replies=None, notification=False, callback=None)__
+
+__Text__
+```python
+ntalk.send(user_id, "Hello Naver :)")
+```
+__Image__
+```python
+ntalk.send(user_id, Template.ImageContent(image_url))
+```
+__CompositeContent__
+```python
+ntalk.send(
+    user_id,
+    message=CompositeContent(composite_list=[])
+)
+```
+__quick reply__
+```python
+quick_replies = QuickReply(
+    [
+        Button.TextButton('Punch', 'PunchCode'),
+        Button.LinkButton('Link', 'https://example.link.com')
+    ]
+)
+# can use a list of buttons instead of QuickReply instance
+#
+# quick_replies = [ {'title': 'Punch', 'value': 'PunchCode'},
+#                    {'title': 'Link', 'value': 'https://example.link.com'}]
+
+ntalk.send(
+    user_id,
+    "Quick Reply message",
+    quick_replies=quick_replies
+)
+```
+
+
 
  
 
