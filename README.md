@@ -64,78 +64,95 @@ def send_handler(event):
 
 ```
 
-## API
+# API
 
 * All attributes in Instances is same with snake case of the key name in json request from navertalk.
 * See more info: [Naver Talk Github Page](https://github.com/navertalk/chatbot-api)
 
-### NaverTalkApi
+## NaverTalkApi
 Create a new NaverTalk instance
 ```python
 ntalk = nta.NaverTalkApi('YOUR_NAVER_TALK_ACCESS_TOKEN')
 ``` 
 
-#### handler
+### handler
 
 Handle event from user with decorators
 
 The decorated Function gets [Event](##event) paramemter
 
-__@handle_open__
+##### __@handle_open__
 
-Open Event Handler
+- Open Event Handler
 
-__@handle_send__
+##### __@handle_send__
 
-Send Event Handler
-
-__@handle_leave__
-
-Leave Event Handler
-
-__@handle_friend__
-
-Friend Event Handler
-
-__@handle_profile__
-
-Profile Event Handler
-
-__@handle_pay_complete__
-
-PayComplete Event Handler
-
-__@handle_pay_confirm__
-
-PayConfirm Event Handler
-
-__@handle_echo__
-
-Echo Event Handler
-
-__@handle_before_process__
-
-Ahead of all event handler
-
-__@after_send__
-
-Handler triggered after sending for each message to user
-
-With two parameters [Response](###Response) and [Payload](###Payload) 
-
-__example__
+- Send Event Handler
 ```python
 @ntalk.handle_send
 def send_handler_function(event):
     user_id = event.user_id
     text = event.text
-    
+
+```
+#### __@handle_leave__
+
+- Leave Event Handler
+
+#### __@handle_friend__
+
+- Friend Event Handler
+
+#### __@handle_profile__
+
+- Profile Event Handler
+
+#### __@handle_pay_complete__
+
+- PayComplete Event Handler
+
+#### __@handle_pay_confirm__
+
+- PayConfirm Event Handler
+
+#### __@handle_echo__
+
+- Echo Event Handler
+
+#### __@handle_before_process__
+
+- Ahead of all event handler
+
+#### __@after_send__
+
+- Handler triggered after sending for each message to user
+- With two parameters [Response](###Response) and [Payload](###Payload) 
+```python
 @ntalk.after_send
 def do_something_after_send_for_each_message(res, payload):
     # do something you want
     pass
 ```
 
+#### __@callback__
+
+- Callback Handler triggered when user clicks button with code value.
+- After Callback Handling, [@handle_send](#####@handle_send) activated.
+- Regular Expression can be used.
+```python
+@ntalk.callback
+def calback_handler(event):
+    user_id = event.user_id
+    code = event.code
+    
+@ntalk.callback(['(^Hello).*'])
+def hello_callback_handler(event):
+    # This function will be triggered when a user hit the button contains code value is Hello
+    code = event.code # ex) Hello Naver
+```
+
+
+__example__
 
 
 #### Send a message
@@ -153,7 +170,7 @@ __CompositeContent__
 ```python
 ntalk.send(
     user_id,
-    message=CompositeContent(composite_list=[])
+    message=CompositeContent(composite_list=[ ... ])
 )
 ```
 __quick reply__
