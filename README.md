@@ -79,7 +79,7 @@ ntalk = nta.NaverTalkApi('YOUR_NAVER_TALK_ACCESS_TOKEN')
 
 Handle event from user with decorators
 
-The decorated Function gets [Event](##event) paramemter
+The decorated Function takes [Event](##event) paramemter
 
 ##### __@handle_open__
 
@@ -96,7 +96,7 @@ def open_handler_function(event):
     under_19 = event.under_19 # bool: 사용자 19세 미만 여부
 ```
 
-##### __@handle_send__
+#####__@handle_send__
 
 - Send Event Handler
 - [Send Event 정보](https://github.com/navertalk/chatbot-api#send-%EC%9D%B4%EB%B2%A4%ED%8A%B8)
@@ -187,7 +187,7 @@ def echo_handler_function(event):
 #### __@handle_before_process__
 
 - Ahead of all event handler
-- 이벤트 종류에 상관 없이 항상 실행
+- 이벤트 handler를 사용하기 전에 실행되는 함수. (event 종류에 상관없이 실행된다.)
 ```python
 @ntalk.handler_before_process
 def before_process_function(event):
@@ -198,7 +198,7 @@ def before_process_function(event):
 
 - Handler triggered after sending for each message to user
 - ntalk.send를 성공할 때 마다 실행
-- With two parameters [Response](###Response) and [Payload](###Payload) 
+- With two parameters [Response](#Response) and [Payload](#Payload) 
 ```python
 @ntalk.after_send
 def do_something_after_send_for_each_message(res, payload):
@@ -209,7 +209,7 @@ def do_something_after_send_for_each_message(res, payload):
 #### __@callback__
 
 - Callback Handler triggered when user clicks button with code value.
-- After Callback Handling, [@handle_send](#####@handle_send) activated.
+- After Callback Handling, [@handle_send](#@handle_send) is activated.
 - Regular Expression can be used.
 ```python
 @ntalk.callback
@@ -222,10 +222,6 @@ def hello_callback_handler(event):
     # This function will be triggered when a user hit the button contains code value starts with Hello
     code = event.code # ex) Hello Naver
 ```
-
-
-__example__
-
 
 #### Send a message
 __send(self, user_id, message, quick_replies=None, notification=False, callback=None)__
@@ -266,7 +262,7 @@ quick_replies = QuickReply(
 )
 # can use a list of buttons instead of QuickReply instance
 #
-# quick_replies = [ {'title': 'Punch', 'value': 'PunchCode'},
+# quick_replies = [ {'title': 'Punch', 'value': 'PunchedCode'},
 #                    {'title': 'Link', 'value': 'https://example.link.com'}]
 
 ntalk.send(
