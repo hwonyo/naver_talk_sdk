@@ -181,16 +181,23 @@ def pay_confirm_handler(event):
 @ntalk.handle_echo
 def echo_handler_function(event):
     user_id = event.user_id
-    
+    pass
 ```
 
 #### __@handle_before_process__
 
 - Ahead of all event handler
+- 이벤트 종류에 상관 없이 항상 실행
+```python
+@ntalk.handler_before_process
+def before_process_function(event):
+    user_id = event.user_id
+```
 
 #### __@after_send__
 
 - Handler triggered after sending for each message to user
+- ntalk.send를 성공할 때 마다 실행
 - With two parameters [Response](###Response) and [Payload](###Payload) 
 ```python
 @ntalk.after_send
@@ -222,6 +229,12 @@ __example__
 
 #### Send a message
 __send(self, user_id, message, quick_replies=None, notification=False, callback=None)__
+
+- user_id *str*: 보내려는 유저의 고유 아이디
+- message *Template* or *str*: 전송하고자 하는 메세지
+- quick_replies *Template* or *list*: 빠른 답장
+- notification *bool*: 푸쉬 메세지 설정 
+- callback *func*: callback 함수. 메세지를 보내고 난 뒤에 실행된다.  
 
 __Text__
 ```python
