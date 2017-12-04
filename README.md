@@ -79,7 +79,7 @@ ntalk = nta.NaverTalkApi('YOUR_NAVER_TALK_ACCESS_TOKEN')
 
 Handle event from user with decorators
 
-The decorated Function takes [Event](##event) paramemter
+The decorated Function takes [Event](#event) paramemter
 
 ##### __@handle_open__
 
@@ -96,7 +96,7 @@ def open_handler_function(event):
     under_19 = event.under_19 # bool: 사용자 19세 미만 여부
 ```
 
-#####__@handle_send__
+##### __@handle_send__
 
 - Send Event Handler
 - [Send Event 정보](https://github.com/navertalk/chatbot-api#send-%EC%9D%B4%EB%B2%A4%ED%8A%B8)
@@ -151,7 +151,7 @@ def profile_handler_function(event):
 - PayComplete Event Handler
 - [PayComplete Event 정보](https://github.com/navertalk/chatbot-api/blob/master/pay_api_v1.md#pay_complete-이벤트-구조)
 ```python
-@handle_pay_complete
+@ntalk.handle_pay_complete
 def pay_complete_handler(event):
     user_id = event.user_id
     code = event.code # str: 페이 성공 여부 Success|Fail
@@ -165,7 +165,7 @@ def pay_complete_handler(event):
 - PayConfirm Event Handler
 - [PayComfirm Event 정보](https://github.com/navertalk/chatbot-api/blob/master/pay_api_v1.md#pay_confirm-이벤트)
 ```python
-@handle_pay_confirm
+@ntalk.handle_pay_confirm
 def pay_confirm_handler(event):
     user_id = event.user_id
     code = event.code # str
@@ -198,7 +198,7 @@ def before_process_function(event):
 
 - Handler triggered after sending for each message to user
 - ntalk.send를 성공할 때 마다 실행
-- With two parameters [Response](#Response) and [Payload](#Payload) 
+- With two parameters [Response](#response) and [Payload](#payload) 
 ```python
 @ntalk.after_send
 def do_something_after_send_for_each_message(res, payload):
@@ -223,8 +223,8 @@ def hello_callback_handler(event):
     code = event.code # ex) Hello Naver
 ```
 
-### Send a message
-__send(self, user_id, message, quick_replies=None, notification=False, callback=None)__
+## Send a message
+### __send(self, user_id, message, quick_replies=None, notification=False, callback=None)__
 
 - user_id *str*: 보내려는 유저의 고유 아이디
 - message *Template* or *str*: 전송하고자 하는 메세지
@@ -319,7 +319,7 @@ Template.CompositeContent(
 - title: 카드의 타이틀
 - description: 카드의 상세설명
 - image: 카드에 보이는 이미지 url or 이미지 id
-- element_list: 카드를 구성하는 [ElementData](#ElementData) 리스트
+- element_list: 카드를 구성하는 [ElementData](#elementdata) 리스트
 - button_list: 카드를 구성하는 [Button](#Buttons) 리스트
 - [composite 정보](https://github.com/navertalk/chatbot-api#composite-object)
 
@@ -342,7 +342,7 @@ Template.Composite(
 ### ElementList
 > __init__(self, data, **kwargs)
 
-- data: [ElementData](#ElementData) 리스트
+- data: [ElementData](#elementdata) 리스트
 - [ElementList 정보](https://github.com/navertalk/chatbot-api#elementlist-object)
 ```python
 Template.ElementList(data=[
@@ -387,7 +387,7 @@ Template.QuickReply([
 
 - merchant_pay_key: 필수
 - total_pay_amount: 필수 
-- product_items: 필수 [ProductItem](#ProductItem) 리스트
+- product_items: 필수 [ProductItem](#productItem) 리스트
 - 자세한 정보 및 나머지 값들 [PaymentInfo](https://github.com/navertalk/chatbot-api/blob/master/pay_api_v1.md#paymentinfo-오브젝트) 참고
 ```python
 Template.ProductInfo(
