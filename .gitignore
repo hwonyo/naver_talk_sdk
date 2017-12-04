@@ -10,3 +10,4 @@ Gemfile
 /docs/_build
 py2/
 /dist
+example/
