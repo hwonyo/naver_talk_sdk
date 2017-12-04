@@ -66,7 +66,7 @@ def send_handler(event):
 
 # API
 
-* All attributes in Instances is same with snake case of the key name in json request from navertalk.
+* All attributes in Instances are same with snake case of the key name in json request from navertalk.
 * See more info: [Naver Talk Github Page](https://github.com/navertalk/chatbot-api)
 
 ## NaverTalkApi
@@ -84,40 +84,105 @@ The decorated Function gets [Event](##event) paramemter
 ##### __@handle_open__
 
 - Open Event Handler
+- [Open Event 정보](https://github.com/navertalk/chatbot-api#open-%EC%9D%B4%EB%B2%A4%ED%8A%B8)
+```python
+@ntalk.handle_open
+def open_handler_function(event):
+    user_id = event.user_id # str: 사용자 고유값
+    inflow = event.inflow # str: 사용자 접근 방법
+    refer = event.referer # str: 사용자 접근 url
+    friend =  event.friend # bool: 사용자 친구 여부
+    under_14 = event.under_14 # bool: 사용자 14세 미만 여부
+    under_19 = event.under_19 # bool: 사용자 19세 미만 여부
+```
 
 ##### __@handle_send__
 
 - Send Event Handler
+- [Send Event 정보](https://github.com/navertalk/chatbot-api#send-%EC%9D%B4%EB%B2%A4%ED%8A%B8)
 ```python
 @ntalk.handle_send
 def send_handler_function(event):
-    user_id = event.user_id
-    text = event.text
+    user_id = event.user_id # str
+    text = event.text # str: 사용자가 입력한 텍스트
+    code = event.code # str: 사용자가 선택한 버튼의 값
+    input_type = event.input_type # str: 사용자가 입력한 방식
+    is_code = event.is_code # bool: code값 여부
+    image_url = event.image_url # str: 사용자가 보낸 이미지 url
 
 ```
 #### __@handle_leave__
 
 - Leave Event Handler
+- [Leave Event 정보](https://github.com/navertalk/chatbot-api#leave-%EC%9D%B4%EB%B2%A4%ED%8A%B8)
+```python
+@ntalk.handle_leave
+def leave_handler_function(event):
+    user_id = event.user_id
+```
 
 #### __@handle_friend__
 
 - Friend Event Handler
-
+- [Friend Event 정보](https://github.com/navertalk/chatbot-api#friend-%EC%9D%B4%EB%B2%A4%ED%8A%B8)
+```python
+@ntalk.handle_friend
+def friend_handler_function(event):
+    user_id = event.user_id
+    set_on = event.set_on # bool: 친구추가 여부
+```
 #### __@handle_profile__
 
 - Profile Event Handler
+- [Profile Event 정보](https://github.com/navertalk/chatbot-api/blob/master/profile_api_v1.md)
+```python
+@ntalk.handle_profile
+def profile_handler_function(event):
+    user_id = event.user_id
+    result = event.result # str: 사용자 동의 결과 SUCCESS|DISAGREE|CANCEL
+    nickname = event.nickname # str: 사용자 이름 or None
+    cellphone = event.cellphone # str: 사용자 연락처 or None
+    address = event.address # str: 사용자 주소 or None
+    
+```
 
 #### __@handle_pay_complete__
 
 - PayComplete Event Handler
-
+- [PayComplete Event 정보](https://github.com/navertalk/chatbot-api/blob/master/pay_api_v1.md#pay_complete-이벤트-구조)
+```python
+@handle_pay_complete
+def pay_complete_handler(event):
+    user_id = event.user_id
+    code = event.code # str: 페이 성공 여부 Success|Fail
+    payment_id event.payment_id # str 결제 성공시 결제번호
+    merchant_pay_key = event.merchant_pay_key # str
+    merchant_user_key = event.merchant_user_key # str
+    message = event.message # str 결제 실패시 메세지
+```
 #### __@handle_pay_confirm__
 
 - PayConfirm Event Handler
-
+- [PayComfirm Event 정보](https://github.com/navertalk/chatbot-api/blob/master/pay_api_v1.md#pay_confirm-이벤트)
+```python
+@handle_pay_confirm
+def pay_confirm_handler(event):
+    user_id = event.user_id
+    code = event.code # str
+    message = event.message
+    payment_id = event.payment_id
+    detail = event.detail # 네이버페이 간편결제 승인 API 응답본문 detail 그대로 반환.
+```
 #### __@handle_echo__
 
 - Echo Event Handler
+- [Echo Event 정보](https://github.com/navertalk/chatbot-api#echo-%EC%9D%B4%EB%B2%A4%ED%8A%B8)
+```python
+@ntalk.handle_echo
+def echo_handler_function(event):
+    user_id = event.user_id
+    
+```
 
 #### __@handle_before_process__
 
@@ -166,6 +231,11 @@ __Image__
 ```python
 ntalk.send(user_id, Template.ImageContent(image_url))
 ```
+or
+```python
+ntalk.send(user_id, Template.ImageContent(image_id=image_id))
+```
+
 __CompositeContent__
 ```python
 ntalk.send(
