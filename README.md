@@ -223,7 +223,7 @@ def hello_callback_handler(event):
     code = event.code # ex) Hello Naver
 ```
 
-#### Send a message
+### Send a message
 __send(self, user_id, message, quick_replies=None, notification=False, callback=None)__
 
 - user_id *str*: 보내려는 유저의 고유 아이디
@@ -233,6 +233,7 @@ __send(self, user_id, message, quick_replies=None, notification=False, callback=
 - callback *func*: callback 함수. 메세지를 보내고 난 뒤에 실행된다.  
 
 __Text__
+
 ```python
 ntalk.send(user_id, "Hello Naver :)")
 ```
@@ -272,8 +273,148 @@ ntalk.send(
 )
 ```
 
+## Template
+
+```python
+from nta import Template
+```
+
+### TextContent
+> __init__(self, text, code=None, input_type=None, **kwargs)
+
+- text: 사용자에게 보낼 텍스트
+- code: 사용자에게 받은 텍스트
+- input_type: 사용자 입력 타입
+- [textContent 정보](https://github.com/navertalk/chatbot-api#textcontent)
+```python
+Template.TextContent('너에게 보내는 메세지')
+```
+
+### ImageContent
+> __init__(self, image_url=None, image_id=None, **kwargs)
+
+- image_url: 사용자에게 보낼 이미지 url
+- image_id: 사용자에게 보낼 이미지 id
+- image_url과 image_id 중 하나를 반드시 포함 (image_url 우선)
+- [imageContent 정보](https://github.com/navertalk/chatbot-api#imagecontent)
+```python
+Template.ImageContent(image_url='xxx.jpg')
+```
+### CompositeContent 
+> __init__(self, composite_list, **kwargs)
+
+- 카드뷰 형식의 탬플릿
+- composite_list: [composite](#composite) 리스트 
+- [compositeContent 정보](https://github.com/navertalk/chatbot-api#compositecontent)
+```python
+Template.CompositeContent(
+    composite_list = [Template.Composite(...), ...]
+)
+```
 
 
- 
+### Composite
+> __init__(self, title, description=None, image=None, element_list=None, button_list=None, **kwargs)
 
+- title: 카드의 타이틀
+- description: 카드의 상세설명
+- image: 카드에 보이는 이미지 url or 이미지 id
+- element_list: 카드를 구성하는 [ElementData](#ElementData) 리스트
+- button_list: 카드를 구성하는 [Button](#Buttons) 리스트
+- [composite 정보](https://github.com/navertalk/chatbot-api#composite-object)
 
+```python
+Template.Composite(
+    title="굵은글씨",
+    description="회색글씨",
+    image="xxx.jpg",
+    element_list=Template.ElementList([
+        Template.ElementData(...), 
+        ...
+    ]),
+    button_list=[
+        Template.ButtonText(...),
+        ...
+    ]
+)
+```
+
+### ElementList
+> __init__(self, data, **kwargs)
+
+- data: [ElementData](#ElementData) 리스트
+- [ElementList 정보](https://github.com/navertalk/chatbot-api#elementlist-object)
+```python
+Template.ElementList(data=[
+    Template.ElementData(...),
+    ...
+])
+```
+
+### ElementData
+> __init__(self, title, description=None, sub_description=None, image=None, button=None, **kwargs)
+
+- title: Element 타이틀
+- description: 상세정보
+- sub_dscription: 하위 상세정보
+- image: 이미지 url or 이미지 id
+- button: Template.Button 버튼 하나
+- [ElementData 정보](https://github.com/navertalk/chatbot-api#elementdata-object-list-%ED%83%80%EC%9E%85)
+```python
+Template.ElementData(
+    title="굵은글씨",
+    description="회색글씨",
+    sub_description="더 회색글씨",
+    image="xxx.jpg",
+    button=Template.ButtonText(...)
+)
+```
+
+### QuickReply
+> __init__(self, button_list, **kwargs)
+
+- button_list: 버튼 리스트
+- [quickReply 정보](https://github.com/navertalk/chatbot-api#%ED%80%B5%EB%B2%84%ED%8A%BC)
+```python
+Template.QuickReply([
+    Template.ButtonText(...),
+    ...
+])
+```
+
+### PaymentInfo
+> __init__(self, merchant_pay_key, total_pay_amount, product_items, merchant_user_key=None, ...)
+
+- merchant_pay_key: 필수
+- total_pay_amount: 필수 
+- product_items: 필수 [ProductItem](#ProductItem) 리스트
+- 자세한 정보 및 나머지 값들 [PaymentInfo](https://github.com/navertalk/chatbot-api/blob/master/pay_api_v1.md#paymentinfo-오브젝트) 참고
+```python
+Template.ProductInfo(
+    merchant_pay_key="yo-product-123",
+    total_pay_amount=100000000,
+    product_items=[
+        Template.ProductItem(...),
+        ...
+    ],
+    ...
+)
+```
+
+### ProductItem
+> __init__(self, category_type, category_id, uid, name, ...)
+
+- category_type: 필수
+- category_id: 필수
+- uid: 필수
+- name: 필수
+- 자세한 정보 및 나머지 값들 [productItem](https://github.com/navertalk/chatbot-api/blob/master/pay_api_v1.md#productitem-오브젝트)참고
+```python
+Template.ProductItem(
+    category_type="Book",
+    category_id="yo-123-book",
+    uid="7269889",
+    name="yosbest",
+    ...
+)
+```
