@@ -6,9 +6,8 @@
 
 SDK of the NAVER TALK API for Python
 
-# About the NAVERTALK Messaging API
-
 __Inspired By : [fbmq](https://github.com/conbus/fbmq) and [line-bot-sdk](https://github.com/line/line-bot-sdk-python)__
+# About the NAVERTALK Messaging API
 ## Table of Contents
 
 * [Install](#install)
@@ -489,3 +488,52 @@ Button.ButtonLink("title showed up", "Linked URL", mobile_url="#Linked URL in Mo
 ```python
 Button.ButtonOption("title showed up", button_list=[Button.ButtonText(...), ...])
 ```
+## Exception
+```python
+from nta.exceptions import (
+    NaverTalkApiError,
+    NaverTalkPaymentError,  
+    NaverTalkApiConnectionError
+    )
+
+def webhook_handler():
+    req = requests.get_data(as_text=True)
+    try:
+        ntalk.handle_webhook(req)
+    except NaverTalkApiError as e:
+        assert e.status_code == 200
+        assert e.result_code != "00"
+        # e.message from navertalk
+    except NaverTalkApiConnectionError as e:
+        assert e.status_code != 200
+    except NaverTalkPaymentError as e:
+        return e.message, 400
+    
+    return "ok"
+    
+```
+### NaverTalkApiError
+
+- Naver Talk에 Post 이후 받은 값 Success가 False인 경우 발생
+- resultCode가 "00"이 아닌 경우 발생.
+- 더 많은 result코드와 내용에 대한 정보 [Error](https://github.com/navertalk/chatbot-api#error-명세서)
+
+### NaverTalkApiConnectionError
+
+- NaverTalk api internal server error.
+- 네이버톡으로 부터 200이 아닌 response를 받았을 때 발생.
+
+### NaverTalkPaymentError
+
+- 결제를 취소를 위한 error
+- 사용자의 결제를 승인을 거부할 때 사용.
+- Pay 개발가이드 참고 [Pay](https://github.com/navertalk/chatbot-api/blob/master/pay_api_v1.md#개발가이드)
+
+example
+```python
+@ntalk.handle_pay_complete
+def pay_handle_func(event):
+    if not 재고:
+        raies NaverTalkPaymentError('재고 없음') 
+```
+
