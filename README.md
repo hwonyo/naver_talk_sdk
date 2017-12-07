@@ -45,7 +45,10 @@ __Inspired By : [fbmq](https://github.com/conbus/fbmq) and [line-bot-sdk](https:
     - [ButtonText](#buttontext)
     - [ButtonLink](#buttonlink)
     - [ButtonOption](#buttonoption)
-    
+  - [Exception](#exception)
+    - [NaverTalkApiError](#navertalkapierror)
+    - [NaverTalkApiConnectionError](#navertalkapiconnectionerror)
+    - [NaverTalkPaymentError](#navertalkpaymenterror)
      
 ## Install
 ```
@@ -529,11 +532,11 @@ def webhook_handler():
 - 사용자의 결제를 승인을 거부할 때 사용.
 - Pay 개발가이드 참고 [Pay](https://github.com/navertalk/chatbot-api/blob/master/pay_api_v1.md#개발가이드)
 
-example
-```python
-@ntalk.handle_pay_complete
-def pay_handle_func(event):
-    if not 재고:
-        raies NaverTalkPaymentError('재고 없음') 
-```
+    example
+    ```python
+    @ntalk.handle_pay_complete
+    def pay_handle_func(event):
+        if not 재고:
+            raies NaverTalkPaymentError('재고 없음') 
+    ```
 
