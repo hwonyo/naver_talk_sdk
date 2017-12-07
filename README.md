@@ -79,9 +79,9 @@ ntalk = nta.NaverTalkApi('YOUR_NAVER_TALK_ACCESS_TOKEN')
 
 Handle event from user with decorators
 
-The decorated Function takes [Event](#event) paramemter
+Decorated Function takes [Event](#event) paramemter
 
-##### __@handle_open__
+#### __@handle_open__
 
 - Open Event Handler
 - [Open Event 정보](https://github.com/navertalk/chatbot-api#open-%EC%9D%B4%EB%B2%A4%ED%8A%B8)
@@ -96,7 +96,7 @@ def open_handler_function(event):
     under_19 = event.under_19 # bool: 사용자 19세 미만 여부
 ```
 
-##### __@handle_send__
+#### __@handle_send__
 
 - Send Event Handler
 - [Send Event 정보](https://github.com/navertalk/chatbot-api#send-%EC%9D%B4%EB%B2%A4%ED%8A%B8)
@@ -209,7 +209,7 @@ def do_something_after_send_for_each_message(res, payload):
 #### __@callback__
 
 - Callback Handler triggered when user clicks button with code value.
-- After Callback Handling, [@handle_send](#@handle_send) is activated.
+- After Callback Handling, [@handle_send](#handle_send) is activated.
 - Regular Expression can be used.
 ```python
 @ntalk.callback
@@ -320,7 +320,7 @@ Template.CompositeContent(
 - description: 카드의 상세설명
 - image: 카드에 보이는 이미지 url or 이미지 id
 - element_list: 카드를 구성하는 [ElementData](#elementdata) 리스트
-- button_list: 카드를 구성하는 [Button](#Buttons) 리스트
+- button_list: 카드를 구성하는 [Button](#buttons) 리스트
 - [composite 정보](https://github.com/navertalk/chatbot-api#composite-object)
 
 ```python
@@ -387,7 +387,7 @@ Template.QuickReply([
 
 - merchant_pay_key: 필수
 - total_pay_amount: 필수 
-- product_items: 필수 [ProductItem](#productItem) 리스트
+- product_items: 필수 [ProductItem](#productitem) 리스트
 - 자세한 정보 및 나머지 값들 [PaymentInfo](https://github.com/navertalk/chatbot-api/blob/master/pay_api_v1.md#paymentinfo-오브젝트) 참고
 ```python
 Template.ProductInfo(
@@ -416,5 +416,38 @@ Template.ProductItem(
     uid="7269889",
     name="yosbest",
     ...
-)
+```
+## Buttons
+```python
+from nta import Button
+```
+### ButtonText
+> __init__(self, title, code=None, **kwargs)
+
+- title: 버튼 값.
+- code : 버튼에 숨겨진 code 값.
+- 자세한 정보 [buttonText](https://github.com/navertalk/chatbot-api#buttondata-object-text-타입)
+```python
+Button.ButtonText('보여지는 타이틀', '숨겨진 코드값')
+```
+
+### ButtonLink
+> __init__(self, title, url, mobile_url=None, **kwargs)
+
+- title: 보여지는 버튼 값.
+- url : 연결되는 링크
+- mobile_url: 모바일 상에서 연결되는 링크.
+- 자세한 정보 [buttonLink](https://github.com/navertalk/chatbot-api#buttondata-object-link-타입)
+```python
+Button.ButtonLink("title showed up", "Linked URL", mobile_url="#Linked URL in Mobile device")
+```
+
+### ButtonOption
+> __init__(self, title, button_list, **kwargs)
+
+- title: 노출되는 텍스트
+- button_list: 숨겨진 버튼
+- 자세한 정보 [buttonOption](https://github.com/navertalk/chatbot-api#buttondata-object-option-타입)
+```python
+Button.ButtonOption("title showed up", button_list=[Button.ButtonText(...), ...])
 ```
