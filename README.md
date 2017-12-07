@@ -9,7 +9,45 @@ SDK of the NAVER TALK API for Python
 # About the NAVERTALK Messaging API
 
 __Inspired By : [fbmq](https://github.com/conbus/fbmq) and [line-bot-sdk](https://github.com/line/line-bot-sdk-python)__
+## Table of Contents
 
+* [Install](#install)
+* [Synopsis](#synopsis)
+* [API](#api)
+  - [NaverTalkApi](#navertalkapi)
+    - [handler](#handler)
+      - [@handle_open](#handle_open)
+      - [@handle_send](#handle_send)
+      - [@handle_leave](#handle_leave)
+      - [@handle_friend](#handle_friend)
+      - [@handle_profile](#handle_profile)
+      - [@handle_pay_complete](#handle_pay_complete)
+      - [@handle_pay_confirm](#handle_pay_confirm)
+      - [@handle_echo](#handle_echo)
+      - [@handle_before_process](#handle_before_process)
+      - [@after_send](#after_send)
+      - [@callback](#callback)
+    - [Send a message](#send-a-message)
+      - [Text](#text)
+      - [Image](#image)
+      - [CompositeContent](#compositecontent)
+      - [quick reply](#quick-reply)
+  - [Template](#template)
+    - [TextContent](#textcontent)
+    - [ImageContent](#imagecontent)
+    - [CompositeContent](#compositecontent)
+    - [Composite](#composite)
+    - [ElementList](#elementlist)
+    - [ElementData](#elementdata)
+    - [QuickReply](#quickreply)
+    - [PaymentInfo](#paymentinfo)
+    - [ProductItem](#productitem)
+  - [Buttons](#buttons)
+    - [ButtonText](#buttontext)
+    - [ButtonLink](#buttonlink)
+    - [ButtonOption](#buttonoption)
+    
+     
 ## Install
 ```
 pip install nta
@@ -232,12 +270,12 @@ def hello_callback_handler(event):
 - notification *bool*: 푸쉬 메세지 설정 
 - callback *func*: callback 함수. 메세지를 보내고 난 뒤에 실행된다.  
 
-__Text__
+#### __Text__
 
 ```python
 ntalk.send(user_id, "Hello Naver :)")
 ```
-__Image__
+#### __Image__
 ```python
 ntalk.send(user_id, Template.ImageContent(image_url))
 ```
@@ -246,14 +284,14 @@ or
 ntalk.send(user_id, Template.ImageContent(image_id=image_id))
 ```
 
-__CompositeContent__
+#### __CompositeContent__
 ```python
 ntalk.send(
     user_id,
     message=CompositeContent(composite_list=[ ... ])
 )
 ```
-__quick reply__
+#### __quick reply__
 ```python
 quick_replies = QuickReply(
     [
