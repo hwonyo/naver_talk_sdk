@@ -77,7 +77,7 @@ class TestNaverTalkApi(unittest.TestCase):
             self.assertEqual(e.status_code, 200)
             self.assertEqual(e.result_code, "02")
             self.assertEqual(e.message, 'request json 문자열 파싱 에러')
-            self.assertEqual("%r" % e, "<NaverTalkApiError [request json 문자열 파싱 에러]>")
+            self.assertEqual("%s" % e, "<NaverTalkApiError [request json 문자열 파싱 에러]>")
 
     @responses.activate
     def test_error_handle_upload_image_url(self):
@@ -126,8 +126,8 @@ class TestNaverTalkApi(unittest.TestCase):
         try:
             self.tested.webhook_handler(json.dumps(req))
         except NaverTalkPaymentError as e:
-            self.assertEqual("%r" % e, "<NaverTalkPaymentError [재고 없음]>")
-            self.assertEqual("%s" % e.message, "재고 없음")
+            self.assertEqual(e.message, "재고 없음")
+            self.assertEqual("%s" % e, "<NaverTalkPaymentError [재고 없음]>")
 
 
 if __name__ == '__main__':

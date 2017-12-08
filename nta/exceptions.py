@@ -1,3 +1,4 @@
+#-*- encoding:utf8 -*-
 '''navertalk.exceptions module.'''
 from __future__ import unicode_literals
 from .utils import LOGGER
@@ -67,4 +68,5 @@ class NaverTalkApiConnectionError(BaseError):
         self.response = response
 
 class NaverTalkPaymentError(BaseError):
-    pass
+    def __init__(self, message='-'):
+        super(NaverTalkPaymentError, self).__init__(message)
