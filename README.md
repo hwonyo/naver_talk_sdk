@@ -49,6 +49,14 @@ __Inspired By : [fbmq](https://github.com/conbus/fbmq) and [line-bot-sdk](https:
     - [NaverTalkApiError](#navertalkapierror)
     - [NaverTalkApiConnectionError](#navertalkapiconnectionerror)
     - [NaverTalkPaymentError](#navertalkpaymenterror)
+  - [Event](#event)
+    - [OpenEvent](#openevent)
+    - [LeaveEvent](#leaveevent)
+    - [FriendEvent](#friendevent)
+    - [SendEvent](#sendevent)
+    - [EchoEvent](#echoevent)
+    - [PayCompleteEvent](#paycompleteevent)
+    - [PayConfirmEvent](#payconfirmevent)
      
 ## Install
 ```
