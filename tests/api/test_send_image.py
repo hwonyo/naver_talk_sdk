@@ -133,7 +133,7 @@ class TestNaverTalkAPI(unittest.TestCase):
         self.tested.send(
             'test_user_id',
             ImageContent('test.jpg'),
-            quick_replies=QuickReply(
+            quick_reply=QuickReply(
                 [
                     {'type': 'TEXT', 'title': 'text', 'value': 'PAYLOAD'},
                     {'type': 'LINK', 'title': 'text', 'value': 'PAYLOAD'}
@@ -145,12 +145,14 @@ class TestNaverTalkAPI(unittest.TestCase):
 
         self.tested.send(
             'test_user_id',
-            ImageContent('test.jpg'),
-            quick_replies=QuickReply(
-                [
-                    ButtonText('text', 'PAYLOAD'),
-                    ButtonLink('text', 'PAYLOAD')
-                ]
+            ImageContent(
+                'test.jpg',
+                quick_reply=QuickReply(
+                    [
+                        ButtonText('text', 'PAYLOAD'),
+                        ButtonLink('text', 'PAYLOAD')
+                    ]
+                )
             ),
             callback=test_callback
         )

@@ -118,7 +118,7 @@ class TestNaverTalkAPI(unittest.TestCase):
         self.tested.send(
             'test_user_id',
             'test_str_message',
-            quick_replies=QuickReply(
+            quick_reply=QuickReply(
                 [
                     {'type': 'TEXT', 'title': 'text', 'value': 'PAYLOAD'},
                     {'type': 'LINK', 'title': 'text', 'value': 'PAYLOAD'}
@@ -131,12 +131,10 @@ class TestNaverTalkAPI(unittest.TestCase):
         self.tested.send(
             'test_user_id',
             'test_str_message',
-            quick_replies=QuickReply(
-                [
-                    ButtonText('text', 'PAYLOAD'),
-                    ButtonLink('text', 'PAYLOAD')
-                ]
-            ),
+            quick_reply=[
+                ButtonText('text', 'PAYLOAD'),
+                ButtonLink('text', 'PAYLOAD')
+            ],
             callback=test_callback
         )
         self.assertEqual(counter.call_count, 2)

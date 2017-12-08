@@ -167,7 +167,7 @@ class TestNaverTalkAPI(unittest.TestCase):
                     )
                 ]
             ),
-            quick_replies=QuickReply(
+            quick_reply=QuickReply(
                 [
                     {'type': 'TEXT', 'title': 'text', 'value': 'PAYLOAD'},
                     {'type': 'LINK', 'title': 'text', 'value': 'PAYLOAD'}
@@ -184,12 +184,10 @@ class TestNaverTalkAPI(unittest.TestCase):
                     Composite(
                         title='test_title'
                     )
-                ]
-            ),
-            quick_replies=QuickReply(
-                [
-                    ButtonText('text', 'PAYLOAD'),
-                    ButtonLink('text', 'PAYLOAD')
+                ],
+                quick_reply=[
+                        ButtonText('text', 'PAYLOAD'),
+                        ButtonLink('text', 'PAYLOAD')
                 ]
             ),
             callback=test_callback

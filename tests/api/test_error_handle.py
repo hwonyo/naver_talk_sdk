@@ -1,6 +1,7 @@
 #-*- encoding:utf8 -*-
 from __future__ import unicode_literals, absolute_import
 
+import json
 import unittest
 import responses
 
@@ -10,7 +11,8 @@ from nta import (
 )
 from nta.exceptions import (
     NaverTalkApiError,
-    NaverTalkApiConnectionError
+    NaverTalkApiConnectionError,
+    NaverTalkPaymentError
 )
 
 
@@ -75,6 +77,7 @@ class TestNaverTalkApi(unittest.TestCase):
             self.assertEqual(e.status_code, 200)
             self.assertEqual(e.result_code, "02")
             self.assertEqual(e.message, 'request json 문자열 파싱 에러')
+            self.assertEqual("%r" % e, "<NaverTalkApiError [request json 문자열 파싱 에러]>")
 
     @responses.activate
     def test_error_handle_upload_image_url(self):
@@ -95,12 +98,36 @@ class TestNaverTalkApi(unittest.TestCase):
             self.assertEqual(e.status_code, 200)
             self.assertEqual(e.result_code, "IMG-99")
             self.assertEqual(e.message, "이미지 업로드 중 에러")
+            self.assertEqual("%s" % e, "<NaverTalkApiError [이미지 업로드 중 에러]>")
 
     def test_callback_error(self):
         with self.assertRaises(ValueError):
             @self.tested.callback('Hello')
             def callback_test(event):
                 pass
+
+    def test_naver_pay(self):
+        req = {
+            "event": "pay_complete",
+            "user": "al-2eGuGr5WQOnco1_V-FQ",
+            "options": {
+                "paymentResult": {
+                    "code" : "Success",
+                    "paymentId" : "20170811D3adfaasLL",
+                    "merchantPayKey" : "bot-custom-pay-key-1234",
+                    "merchantUserKey" : "al-2eGuGr5WQOnco1_V-FQ",
+	            }
+            }
+        }
+        @self.tested.handle_pay_complete
+        def pay_complete_fail_error(event):
+            raise NaverTalkPaymentError('재고 없음')
+
+        try:
+            self.tested.webhook_handler(json.dumps(req))
+        except NaverTalkPaymentError as e:
+            self.assertEqual("%r" % e, "<NaverTalkPaymentError [재고 없음]>")
+            self.assertEqual("%s" % e.message, "재고 없음")
 
 
 if __name__ == '__main__':
