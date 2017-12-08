@@ -8,7 +8,8 @@ from .api import (
 )
 from .exceptions import (
     NaverTalkApiError,
-    NaverTalkApiConnectionError
+    NaverTalkApiConnectionError,
+    NaverTalkPaymentError
 )
 from .models import template as Template
 from .models import buttons as Button

@@ -37,7 +37,9 @@ class Base(object):
         """
         if isinstance(other, dict):
             return other == self.as_json_dict()
-        return other and self.as_json_dict() == other.as_json_dict()
+        elif isinstance(other, Base):
+            return self.as_json_dict() == other.as_json_dict()
+        return other == str(self)
 
     def __ne__(self, other):
         """__ne__ method.

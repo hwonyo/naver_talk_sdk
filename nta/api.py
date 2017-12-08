@@ -1,4 +1,12 @@
-#-*- unicode:utf8 -*-
+#-*- unicode: utf-8 -*-
+"""
+    nta
+    ~~~
+
+    :copyright: (c) 2017 by Wonyo Hwang.
+    :license: MIT, see LICENSE for more details.
+
+"""
 import re
 import requests
 import json
@@ -12,7 +20,11 @@ from .utils import LOGGER, PY3, _byteify
 
 
 class WebhookParser(object):
-    """Webhook Parser."""
+    """Webhook Parser.
+    WebhooParser for parsing json request from navertalk.
+    It returns parsed data in a Template.Event instance
+    with snake case attributes.
+    """
 
     def parse(self, req):
         """Parse webhook request body as text.
@@ -108,14 +120,9 @@ class NaverTalkApi(object):
             elif isinstance(event, EchoEvent):
                 self._call_handler('echo', event)
 
-    def send(self, user_id, message, quick_replies=None, notification=False, callback=None):
+    def send(self, user_id, message, quick_reply=None, notification=False, callback=None):
         """
-
-        :param user_id:
-        :param message:
-        :param quick_replies:
-        :param notification:
-        :return:
+        Handle Template type message. And send message to navertalk.
         """
         if not PY3:
             if isinstance(message, unicode):
@@ -124,13 +131,16 @@ class NaverTalkApi(object):
         payload = GenericPayload(
             user=user_id,
             message=message,
-            quick_replies=quick_replies,
+            quick_reply=quick_reply,
             notification=notification
         )
 
-        return self._send(payload, callback=callback)
+        self._send(payload, callback=callback)
 
     def _send(self, payload, callback=None, response_form=NaverTalkResponse):
+        """
+        Request Post to Navertalktalk.
+        """
         data = payload.as_json_string()
         r = requests.post(self._endpoint,
                           data=data,
@@ -168,7 +178,7 @@ class NaverTalkApi(object):
 
 
     def upload_image(self, image_url, callback=None):
-        """Handle Image Upload
+        """Handle Image Upload to navertalk and recieve Image Id.
 
         :param str image_url: imaegUrl to imageId
         :param func callback: function callback after image upload request
@@ -181,7 +191,8 @@ class NaverTalkApi(object):
         return self._send(payload, callback=callback, response_form=NaverTalkImageResponse)
 
     """
-    decorations
+    Decorations
+    Help to Handle each events.
     """
     def handle_open(self, func):
         self._webhook_handlers['open'] = func
@@ -208,24 +219,15 @@ class NaverTalkApi(object):
         self._webhook_handlers['echo'] = func
 
     def before_proccess(self, func):
-        """before_proccess decorator.
-
-        Function with event attr.
-        :param func:
-        :return:
-        """
+        """before_proccess decorator."""
         self._before_process = func
 
     def after_send(self, func):
-        """after_send decorator.
-
-        Function with response and payload
-        :param func:
-        :return:
-        """
+        """after_send decorator."""
         self._after_send = func
 
     def callback(self, *args):
+        """Callback wrapper for handling code value."""
         def wrapper(func):
             if not isinstance(args[0], list):
                 raise ValueError("Callback params must be List")

@@ -16,11 +16,11 @@ class GenericPayload(Payload):
 
     """
 
-    def __init__(self, message, quick_replies=None, notification=False, **kwargs):
+    def __init__(self, message, quick_reply=None, notification=False, **kwargs):
         """___init__ method.
 
         :param str Template | str message: Template to send
-        :param Template.QuickReply | str quick_replies: quick_replies to send
+        :param Template.QuickReply | str quick_reply: quick_reply to send
         :param bool notification: set push alarm
         :param kwargs:
         """
@@ -30,10 +30,10 @@ class GenericPayload(Payload):
         self.options = {"notification": notification}
         if isinstance(message, str):
             message = TextContent(message)
-        if quick_replies:
-            if isinstance(quick_replies, list):
-                quick_replies = QuickReply(quick_replies)
-            message.quick_reply = quick_replies
+        if quick_reply:
+            if isinstance(quick_reply, list):
+                quick_reply = QuickReply(quick_reply)
+            message.quick_reply = quick_reply
         if isinstance(message, TextContent):
             self.text_content = message
         elif isinstance(message, ImageContent):
