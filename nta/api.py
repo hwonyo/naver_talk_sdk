@@ -29,7 +29,7 @@ class WebhookParser(object):
     def parse(self, req):
         """Parse webhook request body as text.
 
-        :param str req: Webhook request body (as text)
+        :param req: Webhook request body (as text)
         :rtype: Event
         :return:
         """
@@ -90,12 +90,12 @@ class NaverTalkApi(object):
         else:
             LOGGER.warn('No matching %s event handler' % name)
 
-    def webhook_handler(self, data):
+    def webhook_handler(self, req):
         """Handle webhook.
 
-        :param str data: Webhook request body (as text)
+        :param req: Webhook request body (as text)
         """
-        event = self.parser.parse(data)
+        event = self.parser.parse(req)
         if event is not None:
             if self._before_process:
                 self._before_process(event)
@@ -103,7 +103,7 @@ class NaverTalkApi(object):
                 self._call_handler('open', event)
             elif isinstance(event, SendEvent):
                 if event.is_code:
-                    _matched_callbacks = self.get_code_callbacks(event)
+                    _matched_callbacks = self.get_code_callbacks(event.code)
                     for callback in _matched_callbacks:
                         callback(event)
                 self._call_handler('send', event)
@@ -122,7 +122,15 @@ class NaverTalkApi(object):
 
     def send(self, user_id, message, quick_reply=None, notification=False, callback=None):
         """
-        Handle Template type message. And send message to navertalk.
+        Send a message to user_id with quick_reply or not.
+        If notification True, push alarm occurred on user's phone.
+        Callback function is invoked after sending message to user is Success.
+
+        :param user_id: Navertalk user_id.
+        :param message: Instances in Template or str are allowed
+        :param quick_reply: add quickReply end of contents.
+        :param notification: On push alarm if True
+        :param callback: Do something after send a message
         """
         if not PY3:
             if isinstance(message, unicode):
@@ -161,12 +169,11 @@ class NaverTalkApi(object):
 
     def request_profile(self, user_id, field, agreements=None, callback=None):
         """Handle Profile Request
+        Request user's profile with user_id, and agreement fields.
 
-        :param str user_id: Target user's id
-        :param str field: Target user info nickname|cellphone|addreess
-        :param list agreements: Target agreement user info nickname|cellphone|addreess
-        :rtype: None
-        :return:
+        :param user_id: Target user's id
+        :param field: Target user info nickname|cellphone|addreess
+        :param agreements: List of user's info nickname|cellphone|addreess
         """
         payload = ProfilePayload(
             user=user_id,
@@ -174,15 +181,15 @@ class NaverTalkApi(object):
             agreements=agreements
         )
 
-        return self._send(payload, callback=callback)
+        self._send(payload, callback=callback)
 
 
     def upload_image(self, image_url, callback=None):
         """Handle Image Upload to navertalk and recieve Image Id.
 
-        :param str image_url: imaegUrl to imageId
-        :param func callback: function callback after image upload request
-        :func will recieve NaverTalkImageResponse and payload
+        :param image_url: imaegUrl to imageId
+        :param callback: function callback after image upload request.
+        the function will recieve NaverTalkImageResponse and payload.
         """
         payload = ImageUploadPayload(
             image_url
@@ -195,39 +202,55 @@ class NaverTalkApi(object):
     Help to Handle each events.
     """
     def handle_open(self, func):
+        """open decorator"""
         self._webhook_handlers['open'] = func
 
     def handle_send(self, func):
+        """send decorator"""
         self._webhook_handlers['send'] = func
 
     def handle_leave(self, func):
+        """leave decorator"""
         self._webhook_handlers['leave'] = func
 
     def handle_friend(self, func):
+        """friend decorator"""
         self._webhook_handlers['friend'] = func
 
     def handle_profile(self, func):
+        """profile decorator"""
         self._webhook_handlers['profile'] = func
 
     def handle_pay_complete(self, func):
+        """payComplete decorator"""
         self._webhook_handlers['pay_complete'] = func
 
     def handle_pay_confirm(self, func):
+        """payConfirm decorator"""
         self._webhook_handlers['pay_confirm'] = func
 
     def handle_echo(self, func):
+        """echo decorator"""
         self._webhook_handlers['echo'] = func
 
     def before_proccess(self, func):
-        """before_proccess decorator."""
+        """before_proccess decorator.
+        Decorated function which is invoked ahead of all event handlers.
+        """
         self._before_process = func
 
     def after_send(self, func):
-        """after_send decorator."""
+        """after_send decorator.
+        Decorated function will be invoked after sending each message.
+        """
         self._after_send = func
 
     def callback(self, *args):
-        """Callback wrapper for handling code value."""
+        """Callback wrapper for handling code value.
+
+        Decorator
+        Decorated function will be invoked by matching regular expression.
+        """
         def wrapper(func):
             if not isinstance(args[0], list):
                 raise ValueError("Callback params must be List")
@@ -240,12 +263,18 @@ class NaverTalkApi(object):
         self._default_button_callback = args[0]
 
 
-    def get_code_callbacks(self, event):
+    def get_code_callbacks(self, code):
+        """get_code_callbacks
+        Find decorated function with code.
+
+        :param code: code from custom button.
+        "rtype: function
+        """
         callbacks = []
         for key in self._button_callbacks.keys():
             if key not in self._button_callbacks_key_regex:
                 self._button_callbacks_key_regex[key] = re.compile(key + '$')
-            if self._button_callbacks_key_regex[key].match(event.code):
+            if self._button_callbacks_key_regex[key].match(code):
                 callbacks.append(self._button_callbacks[key])
 
         if not callbacks:
@@ -255,5 +284,8 @@ class NaverTalkApi(object):
 
 
     def __error_check(self, response):
+        """check error from navertalk.
+        When recieved success false, NaverTalkApiError raised.
+        """
         if not response.success:
             raise NaverTalkApiError(response)

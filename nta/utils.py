@@ -10,6 +10,7 @@ PY3 = sys.version_info[0] == 3
 
 def to_snake_case(text):
     """Convert to snake case.
+
     :param str text:
     :rtype: str
     :return:
@@ -20,6 +21,7 @@ def to_snake_case(text):
 
 def to_camel_case(text):
     """Convert to camel case.
+
     :param str text:
     :rtype: str
     :return:
@@ -30,6 +32,8 @@ def to_camel_case(text):
 
 def _byteify(input):
     """Encoding UTF-8
+    Solving python2 encoding utf-8 error.
+
     :param input: unicode
     :rtype: str
     :return:

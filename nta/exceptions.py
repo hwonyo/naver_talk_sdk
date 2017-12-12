@@ -30,12 +30,12 @@ class BaseError(Exception):
 
 
 class NaverTalkApiError(BaseError):
-    """When Naver Talk failed to build message, this error will be raised"""
+    """When Naver Talk failed to build message, NaverTalkApiError raised"""
 
     def __init__(self, api_response):
         """__init__ method.
 
-        :param response error_api_response: Response class object
+        :param error_api_response: Response class object
         """
         super(NaverTalkApiError, self).__init__(api_response.result_message)
 
@@ -45,17 +45,16 @@ class NaverTalkApiError(BaseError):
     @property
     def status_code(self):
         """
-
         status_code always return 200
-        :rtype int:
+
+        :rtype : int
         :return:
         """
-
         return self._status_code
 
 
 class NaverTalkApiConnectionError(BaseError):
-    """When Naver Talk Api response error, this error will be raised"""
+    """When Naver Talk Api response error, NaverTalkApiConnectionError raised"""
 
     def __init__(self, response):
         """___init__ method.
@@ -68,5 +67,6 @@ class NaverTalkApiConnectionError(BaseError):
         self.response = response
 
 class NaverTalkPaymentError(BaseError):
+    """Raise NaverTalkPaymentError to"""
     def __init__(self, message='-'):
         super(NaverTalkPaymentError, self).__init__(message)

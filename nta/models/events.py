@@ -2,6 +2,11 @@
 from .base import Base
 
 class Event(Base):
+    """
+    Base Event class
+
+    user_id property overloaded all subclasses
+    """
     def __init__(self, user, **kwargs):
         super(Event, self).__init__(**kwargs)
 
@@ -12,8 +17,13 @@ class Event(Base):
         return self.user
 
 
-
 class OpenEvent(Event):
+    """
+    OpenEvent
+
+    When users enter Navertalk Chat
+    This event triggered.
+    """
     def __init__(self, options, **kwargs):
         super(OpenEvent, self).__init__(**kwargs)
 
@@ -22,6 +32,9 @@ class OpenEvent(Event):
 
     @property
     def inflow(self):
+        """
+        Return way to enter chatting room
+        """
         return self.options.get('inflow')
 
     @property
@@ -42,6 +55,12 @@ class OpenEvent(Event):
 
 
 class LeaveEvent(Event):
+    """
+    LeaveEvent
+
+    When users leave Navertalk chat
+    This event triggered.
+    """
     def __init__(self, **kwargs):
         super(LeaveEvent, self).__init__(**kwargs)
 
@@ -49,6 +68,12 @@ class LeaveEvent(Event):
 
 
 class FriendEvent(Event):
+    """
+    FriendEvent
+
+    When users add or delete friend
+    this event triggered.
+    """
     def __init__(self, options, **kwargs):
         super(FriendEvent, self).__init__(**kwargs)
 
@@ -61,6 +86,12 @@ class FriendEvent(Event):
 
 
 class SendEvent(Event):
+    """
+    SendEvent
+
+    When users send message to chatbot
+    this event triggered.
+    """
     def __init__(self, text_content=None, image_content=None, **kwargs):
         super(SendEvent, self).__init__(**kwargs)
 
@@ -94,6 +125,9 @@ class SendEvent(Event):
 
 
 class EchoEvent(Event):
+    """
+    EchoEvent
+    """
     def __init__(self, echoed_event, **kwargs):
         super(EchoEvent, self).__init__(**kwargs)
 
@@ -102,6 +136,9 @@ class EchoEvent(Event):
 
 
 class PayCompleteEvent(Event):
+    """
+    PayCompleteEvent
+    """
     def __init__(self, options, **kwargs):
         super(PayCompleteEvent, self).__init__(**kwargs)
 
@@ -134,6 +171,9 @@ class PayCompleteEvent(Event):
 
 
 class PayConfirmEvent(Event):
+    """
+    PayConfirmEvent
+    """
     def __init__(self, options, **kwargs):
         super(PayConfirmEvent, self).__init__(**kwargs)
 
@@ -165,6 +205,12 @@ class PayConfirmEvent(Event):
 
 
 class ProfileEvent(Event):
+    """
+    ProfileEvent
+
+    When Agent asks users profile information and request profile info,
+    this event will triggered.
+    """
     def __init__(self, options, **kwargs):
         super(ProfileEvent, self).__init__(**kwargs)
 

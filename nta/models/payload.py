@@ -3,7 +3,7 @@ from .template import *
 
 
 class Payload(Base):
-
+    """Base class of payload"""
     def __init__(self, user, **kwargs):
         super(Payload, self).__init__(**kwargs)
 
@@ -12,16 +12,14 @@ class Payload(Base):
 
 class GenericPayload(Payload):
     """General Payload
-
-
+    For Send message to users.
     """
-
     def __init__(self, message, quick_reply=None, notification=False, **kwargs):
         """___init__ method.
 
-        :param str Template | str message: Template to send
-        :param Template.QuickReply | str quick_reply: quick_reply to send
-        :param bool notification: set push alarm
+        :param message: Template to send
+        :param quick_reply: quick_reply to send
+        :param notification: set push alarm
         :param kwargs:
         """
         super(GenericPayload, self).__init__(**kwargs)
@@ -46,9 +44,7 @@ class GenericPayload(Payload):
 
 class ProfilePayload(Payload):
     """Porfile Payload
-
-    """
-
+    For request user's profile."""
     def __init__(self, field, agreements=None, **kwargs):
         super(ProfilePayload, self).__init__(**kwargs)
 
@@ -68,7 +64,8 @@ class ProfilePayload(Payload):
 
 
 class ImageUploadPayload(Payload):
-
+    """ImageUpload Payload
+    For Upload image."""
     def __init__(self, image_url, **kwargs):
 
         self.image_url = image_url

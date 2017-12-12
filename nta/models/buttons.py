@@ -3,10 +3,12 @@ from .base import Base
 
 
 class Buttons(Base):
+    """Base class of Buttons."""
     @staticmethod
     def convert_shortcut_buttons(items):
         """
-        support shortcut buttons [{'type':'TEXT', 'title':'text', 'value':'PAYLOAD'}]
+        support shortcut buttons.
+        EX) [{'type':'TEXT', 'title':'text', 'value':'PAYLOAD'}]
         """
         if items is not None and isinstance(items, list):
             result = []
@@ -39,7 +41,17 @@ class Buttons(Base):
 
 
 class ButtonText(Buttons):
+    """
+    ButtonText for text button to use quickReply and Composite buttons.
+    Invoke Send Event with code value from navertalk to server when user clicks the button.
+    """
     def __init__(self, title, code=None, **kwargs):
+        """ __init__ method.
+
+        :param title: exposed text on the button
+        :param code:  enclosed value under the button
+        :param kwargs:
+        """
         super(ButtonText, self).__init__(**kwargs)
 
         self.type = "TEXT"
@@ -51,7 +63,18 @@ class ButtonText(Buttons):
 
 
 class ButtonLink(Buttons):
+    """
+    ButtonLink for link button to use quickReply and Composite button.
+    Links to url address when user click the button.
+    """
     def __init__(self, title, url, mobile_url=None, **kwargs):
+        """ __init__ method.
+
+        :param title: exposed text on the button
+        :param url: default linked url
+        :param mobile_url: linked url on mobile device
+        :param kwargs:
+        """
         super(ButtonLink, self).__init__(**kwargs)
 
         self.type = "LINK"
@@ -63,7 +86,17 @@ class ButtonLink(Buttons):
 
 
 class ButtonOption(Buttons):
+    """
+    ButtonOption for option button in Composite button.
+    ButtonOption contains the other buttons.
+    """
     def __init__(self, title, button_list, **kwargs):
+        """ __init___ method.
+
+        :param title: exposed text on the button
+        :param button_list: Contained butons list. List of Template.Button
+        :param kwargs:
+        """
         super(ButtonOption, self).__init__(**kwargs)
 
         if not isinstance(button_list, list):
@@ -76,7 +109,16 @@ class ButtonOption(Buttons):
 
 
 class ButtonPay(Buttons):
+    """
+    ButtonPay for pay button in quickReply and Composite button.
+    User can Proceed payment when clicks the button.
+    """
     def __init__(self, payment_info, **kwargs):
+        """ __init__ method.
+
+        :param payment_info: Template.PaymentInfo Instance
+        :param kwargs:
+        """
         super(ButtonPay, self).__init__(**kwargs)
 
         self.type = 'PAY'
