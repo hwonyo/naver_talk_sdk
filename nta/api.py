@@ -166,7 +166,6 @@ class NaverTalkApi(object):
         if self._after_send:
             self._after_send(res, payload)
 
-
     def request_profile(self, user_id, field, agreements=None, callback=None):
         """Handle Profile Request
         Request user's profile with user_id, and agreement fields.
@@ -182,7 +181,6 @@ class NaverTalkApi(object):
         )
 
         self._send(payload, callback=callback)
-
 
     def upload_image(self, image_url, callback=None):
         """Handle Image Upload to navertalk and recieve Image Id.
@@ -262,7 +260,6 @@ class NaverTalkApi(object):
 
         self._default_button_callback = args[0]
 
-
     def get_code_callbacks(self, code):
         """get_code_callbacks
         Find decorated function with code.
@@ -281,7 +278,6 @@ class NaverTalkApi(object):
             if self._default_button_callback is not None:
                 callbacks.append(self._default_button_callback)
         return callbacks
-
 
     def __error_check(self, response):
         """check error from navertalk.
