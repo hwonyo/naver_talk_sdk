@@ -38,5 +38,5 @@ from .events import (
     PayConfirmEvent,
     ProfileEvent,
     FriendEvent,
-
+    HandOverEvent,
 )

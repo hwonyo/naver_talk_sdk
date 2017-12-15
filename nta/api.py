@@ -55,6 +55,8 @@ class WebhookParser(object):
             event = PayConfirmEvent.new_from_json_dict(req_json)
         elif event_type == 'profile':
             event = ProfileEvent.new_from_json_dict(req_json)
+        elif event_type == 'handover':
+            event = HandOverEvent.new_from_json_dict(req_json)
         else:
             LOGGER.warn('Unknown event type: %s' % event_type)
             event = None
@@ -119,6 +121,8 @@ class NaverTalkApi(object):
                 self._call_handler('pay_confirm', event)
             elif isinstance(event, EchoEvent):
                 self._call_handler('echo', event)
+            elif isinstance(event, HandOverEvent):
+                self._call_handler('handover', event)
 
     def send(self, user_id, message, quick_reply=None, notification=False, callback=None):
         """
@@ -230,6 +234,10 @@ class NaverTalkApi(object):
     def handle_echo(self, func):
         """echo decorator"""
         self._webhook_handlers['echo'] = func
+
+    def handle_handover(self, func):
+        """handover decorator"""
+        self._webhook_handlers['handover'] = func
 
     def before_proccess(self, func):
         """before_proccess decorator.

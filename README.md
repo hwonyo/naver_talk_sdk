@@ -23,6 +23,7 @@ __Inspired By : [fbmq](https://github.com/conbus/fbmq) and [line-bot-sdk](https:
       - [@handle_pay_complete](#handle_pay_complete)
       - [@handle_pay_confirm](#handle_pay_confirm)
       - [@handle_echo](#handle_echo)
+      - [@handle_handover](#handle_handover)
       - [@handle_before_process](#handle_before_process)
       - [@after_send](#after_send)
       - [@callback](#callback)
@@ -142,6 +143,8 @@ def open_handler_function(event):
     friend =  event.friend # bool: 사용자 친구 여부
     under_14 = event.under_14 # bool: 사용자 14세 미만 여부
     under_19 = event.under_19 # bool: 사용자 19세 미만 여부
+    mobile = event.mobile # bool: 모바일 사용 여부
+    standby = event.standby # bool: 상담사와 연결된 경우 True
 ```
 
 #### __@handle_send__
@@ -157,6 +160,8 @@ def send_handler_function(event):
     input_type = event.input_type # str: 사용자가 입력한 방식
     is_code = event.is_code # bool: code값 여부
     image_url = event.image_url # str: 사용자가 보낸 이미지 url
+    mobile = event.mobile # bool: 모바일 사용 여부
+    standby = event.standby # bool: 상담사와 연결된 경우 True
 ```
 #### __@handle_leave__
 
@@ -166,6 +171,8 @@ def send_handler_function(event):
 @ntalk.handle_leave
 def leave_handler_function(event):
     user_id = event.user_id
+    mobile = event.mobile # bool: 모바일 사용 여부
+    standby = event.standby # bool: 상담사와 연결된 경우 True
 ```
 
 #### __@handle_friend__
@@ -177,6 +184,8 @@ def leave_handler_function(event):
 def friend_handler_function(event):
     user_id = event.user_id
     set_on = event.set_on # bool: 친구추가 여부
+    mobile = event.mobile # bool: 모바일 사용 여부
+    standby = event.standby # bool: 상담사와 연결된 경우 True
 ```
 #### __@handle_profile__
 
@@ -190,7 +199,8 @@ def profile_handler_function(event):
     nickname = event.nickname # str: 사용자 이름 or None
     cellphone = event.cellphone # str: 사용자 연락처 or None
     address = event.address # str: 사용자 주소 or None
-    
+    mobile = event.mobile # bool: 모바일 사용 여부
+    standby = event.standby # bool: 상담사와 연결된 경우 True
 ```
 
 #### __@handle_pay_complete__
@@ -202,10 +212,12 @@ def profile_handler_function(event):
 def pay_complete_handler(event):
     user_id = event.user_id
     code = event.code # str: 페이 성공 여부 Success|Fail
-    payment_id event.payment_id # str 결제 성공시 결제번호
+    payment_id = event.payment_id # str 결제 성공시 결제번호
     merchant_pay_key = event.merchant_pay_key # str
     merchant_user_key = event.merchant_user_key # str
     message = event.message # str 결제 실패시 메세지
+    mobile = event.mobile # bool: 모바일 사용 여부
+    standby = event.standby # bool: 상담사와 연결된 경우 True
 ```
 #### __@handle_pay_confirm__
 
@@ -219,6 +231,8 @@ def pay_confirm_handler(event):
     message = event.message
     payment_id = event.payment_id
     detail = event.detail # 네이버페이 간편결제 승인 API 응답본문 detail 그대로 반환.
+    mobile = event.mobile # bool: 모바일 사용 여부
+    standby = event.standby # bool: 상담사와 연결된 경우 True
 ```
 #### __@handle_echo__
 
@@ -228,8 +242,22 @@ def pay_confirm_handler(event):
 @ntalk.handle_echo
 def echo_handler_function(event):
     user_id = event.user_id
+    mobile = event.mobile # bool: 모바일 사용 여부
+    standby = event.standby # bool: 상담사와 연결된 경우 True
     pass
 ```
+#### __@handle_handover__
+
+- Handover Event Handler
+- [Handover Event 정보](https://github.com/navertalk/chatbot-api/blob/master/handover_v1.md)
+```python
+@ntalk.handle_handover
+def handover_handler_function(event):
+    user_id = event.user_id
+    control = event.control # 주도권이 챗봇에게 넘어온 경우 (발생하는 이벤트의 컨트롤은 항상 passThread)
+    metadata = event.metadata # 넘어오는 메타 데이터.
+```
+
 
 #### __@handle_before_process__
 
@@ -239,6 +267,7 @@ def echo_handler_function(event):
 @ntalk.handler_before_process
 def before_process_function(event):
     user_id = event.user_id
+    pass
 ```
 
 #### __@after_send__
@@ -606,3 +635,8 @@ def pay_handle_func(event):
 - PayConfirmEvent.payment_id: 결제 식별 고유번호 (결제 성공시 ?)
 - PayConfirmEvent.detail: d네이버페이 간편결제 결제승인 API 응답본문 그대로 반환.
 - [PayConfirmEvent 참고](https://github.com/navertalk/chatbot-api/blob/master/pay_api_v1.md#pay_confirm-이벤트)
+
+### HandOverEvent
+
+- HandOverEvent.control: passThread
+- HandOverEvent.metadata: 네이버톡톡에서 보내온 메타 데이터

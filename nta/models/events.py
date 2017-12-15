@@ -238,3 +238,22 @@ class ProfileEvent(Event):
     @property
     def address(self):
         return self.options.get('address')
+
+
+class HandOverEvent(Event):
+    """
+    HandOverEvent
+
+    When a conversation is over,
+    This event will triggered.
+    """
+    def __init__(self, **kwargs):
+        super(HandOverEvent, self).__init__(**kwargs)
+
+    @property
+    def control(self):
+        return self.options.get('control')
+
+    @property
+    def metadata(self):
+        return self.options.get('metadata')
