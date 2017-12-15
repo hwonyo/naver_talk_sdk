@@ -7,15 +7,21 @@ class Event(Base):
 
     user_id property overloaded all subclasses
     """
-    def __init__(self, user, **kwargs):
+    def __init__(self, user, options=None, **kwargs):
         super(Event, self).__init__(**kwargs)
 
         self.user = user
+        if not options:
+            options = {}
+        self.options = options
 
     @property
     def user_id(self):
         return self.user
 
+    @property
+    def mobile(self):
+        return self.options.get('mobile')
 
 class OpenEvent(Event):
     """
@@ -24,11 +30,10 @@ class OpenEvent(Event):
     When users enter Navertalk Chat
     This event triggered.
     """
-    def __init__(self, options, **kwargs):
+    def __init__(self, **kwargs):
         super(OpenEvent, self).__init__(**kwargs)
 
         self.event = 'open'
-        self.options = options
 
     @property
     def inflow(self):
