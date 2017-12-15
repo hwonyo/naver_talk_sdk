@@ -9,6 +9,7 @@ from .payload import (
     Payload,
     ProfilePayload,
     GenericPayload,
+    ThreadPayload,
 )
 from .buttons import (
     ButtonLink,

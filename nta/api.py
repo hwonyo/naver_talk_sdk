@@ -13,7 +13,7 @@ import json
 
 from .exceptions import NaverTalkApiError, NaverTalkApiConnectionError
 from .models.responses import NaverTalkResponse, NaverTalkImageResponse
-from .models.payload import ProfilePayload, GenericPayload, ImageUploadPayload
+from .models.payload import ProfilePayload, GenericPayload, ImageUploadPayload, ThreadPayload
 from .models.events import *
 
 from .utils import LOGGER, PY3, _byteify
@@ -198,6 +198,22 @@ class NaverTalkApi(object):
         )
 
         return self._send(payload, callback=callback, response_form=NaverTalkImageResponse)
+
+    def take_thread(self, user_id, partner, callback=None):
+        payload = ThreadPayload(
+            user=user_id,
+            partner=partner,
+            control="takeThread"
+        )
+        return self._send(payload, callback=callback)
+
+    def pass_thread(self, user_id, partner, callback=None):
+        payload = ThreadPayload(
+            user=user_id,
+            partner=partner,
+            control="passThread"
+        )
+        return self._send(payload, callback=callback)
 
     """
     Decorations

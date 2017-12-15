@@ -69,3 +69,17 @@ class ImageUploadPayload(Payload):
     def __init__(self, image_url, **kwargs):
 
         self.image_url = image_url
+
+class ThreadPayload(Payload):
+    """Thread Payload"""
+    def __init__(self, partner, control, **kwargs):
+        super(ThreadPayload, self).__init__(**kwargs)
+        self.event = 'handover'
+        self.partner = partner
+        self.options = {
+            'control': control,
+        }
+        if control == 'takeThread':
+            self.options['metadata'] = ""
+        if control == 'passThread':
+            self.options['target_id'] = 1

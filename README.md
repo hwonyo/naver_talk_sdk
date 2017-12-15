@@ -32,6 +32,9 @@ __Inspired By : [fbmq](https://github.com/conbus/fbmq) and [line-bot-sdk](https:
       - [Image](#image)
       - [CompositeContent](#compositecontent)
       - [quick reply](#quick-reply)
+    - [Utility](#utility)
+      - [take_thread](#take_thread)
+      - [pass_thread](#pass_thread)
   - [Template](#template)
     - [TextContent](#textcontent)
     - [ImageContent](#imagecontent)
@@ -353,6 +356,33 @@ ntalk.send(
     user_id,
     "Quick Reply message",
     quick_reply=quick_reply
+)
+```
+
+## Utility
+### __take_thread(self, user_id, partner, callback=None)__
+
+- user_id: 권한을 넘길 사용자
+- partner: 권한을 받을 파트너 관리자
+- callback: callback 함수
+- [자세한 정보](https://github.com/navertalk/chatbot-api/blob/master/handover_v1.md#%EC%B1%97%EB%B4%87%EC%9D%B4-%EB%8C%80%ED%99%94%EC%9D%98-%EC%A3%BC%EB%8F%84%EA%B6%8C%EC%9D%84-%EA%B0%80%EC%A0%B8%EC%98%A4%EA%B8%B0)
+```python
+ntalk.take_thread(
+    user_id=user_id,
+    partner='gentlepie'
+)
+```
+
+### __pass_thread(self, user_id, partner, callback=None)__
+
+- user_id: 권한을 넘길 사용자
+- partner: 권한을 받을 파트너 관리자
+- callback: callback 함수
+- [자세한 정보](https://github.com/navertalk/chatbot-api/blob/master/handover_v1.md#%EC%B1%97%EB%B4%87%EC%9D%98-%EB%A9%94%EC%8B%9C%EC%A7%80%EB%A5%BC-%EC%88%98%EC%8B%A0%ED%95%A0-%EB%95%8C-standby-%EC%86%8D%EC%84%B1)
+```python
+ntalk.pass_thread(
+    user_id=user_id,
+    partner='gentlepie'
 )
 ```
 
