@@ -256,11 +256,14 @@ class TestNaverTalkApi(unittest.TestCase):
 
         @self.tested.handle_handover
         def hanover_event_handler(event):
-            self.assertTrue(isinstance(HandOverEvent, event))
+            self.assertTrue(isinstance(event, HandOverEvent))
             self.assertEqual('test_user', event.user_id)
             self.assertEqual('passThread', event.control)
             self.assertEqual("{\"managerNickname\":\"파트너닉네임\",\"autoEnd\":false}", event.metadata)
+            counter()
 
+        self.tested.webhook_handler(json.dumps(event))
+        self.assertEqual(counter.call_count, 1)
 
 
     def test_standby_true(self):
