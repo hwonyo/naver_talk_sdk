@@ -104,6 +104,7 @@ class TestNaverTalkApi(unittest.TestCase):
             self.assertEqual('test_code', event.code)
             self.assertEqual('typing', event.input_type)
             self.assertTrue(event.is_code)
+            self.assertFalse(event.standby)
             counter()
 
         self.tested.webhook_handler(json.dumps(event))
@@ -151,6 +152,7 @@ class TestNaverTalkApi(unittest.TestCase):
             self.assertTrue(isinstance(event, EchoEvent))
             self.assertEqual('test_user_id', event.user_id)
             self.assertEqual('send', event.echoed_event)
+            self.assertFalse(event.mobile)
             counter()
 
         self.tested.webhook_handler(json.dumps(event))
@@ -235,6 +237,30 @@ class TestNaverTalkApi(unittest.TestCase):
             self.assertEqual('test_message', event.message)
             self.assertEqual('test-payment-id', event.payment_id)
             self.assertEqual({}, event.detail)
+            counter()
+
+        self.tested.webhook_handler(json.dumps(event))
+        self.assertEqual(counter.call_count, 1)
+
+    def test_standby_ture(self):
+        event = {
+            'standby': True,
+            'event': 'send',
+            'user': 'test_user_id',
+            'textContent': {
+                'text': 'test_text',
+                'code': 'test_code',
+                'inputType': 'typing'
+            },
+            'options': {
+                'mobile': False
+            }
+        }
+        counter = mock.MagicMock()
+
+        @self.tested.handle_send
+        def send_handler(event):
+            self.assertTrue(event.standby)
             counter()
 
         self.tested.webhook_handler(json.dumps(event))

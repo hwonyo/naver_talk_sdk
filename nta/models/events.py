@@ -7,13 +7,14 @@ class Event(Base):
 
     user_id property overloaded all subclasses
     """
-    def __init__(self, user, options=None, **kwargs):
+    def __init__(self, user, options=None, standby=False, **kwargs):
         super(Event, self).__init__(**kwargs)
 
         self.user = user
         if not options:
             options = {}
         self.options = options
+        self.standby = standby
 
     @property
     def user_id(self):
