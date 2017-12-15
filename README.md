@@ -61,6 +61,7 @@ __Inspired By : [fbmq](https://github.com/conbus/fbmq) and [line-bot-sdk](https:
     - [EchoEvent](#echoevent)
     - [PayCompleteEvent](#paycompleteevent)
     - [PayConfirmEvent](#payconfirmevent)
+    - [HandOverEvent](#handoverevent)
      
 ## Install
 ```
