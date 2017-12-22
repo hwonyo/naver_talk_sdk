@@ -53,7 +53,6 @@ class TestNaverTalkActionEvent(unittest.TestCase):
         )
 
         counter = mock.MagicMock()
-
         def test_callback(res, payload):
             self.assertEqual(res.result_code, "00")
             self.assertEqual(res.success, True)

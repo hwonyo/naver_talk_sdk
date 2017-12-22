@@ -387,6 +387,24 @@ ntalk.pass_thread(
 )
 ```
 
+### __typing_on(self, user_id, callback=None)
+
+- user_id:
+- callback: callback 함수
+- [자세한 정보](https://github.com/navertalk/chatbot-api#action-%EC%9D%B4%EB%B2%A4%ED%8A%B8)
+```python
+ntalk.typing_on(user_id)
+``` 
+
+### __typing_off(self, user_id, callback=None)
+
+- user_id: 사용자 아이디
+- callback: callback 함수
+- [자세한 정보](https://github.com/navertalk/chatbot-api#action-%EC%9D%B4%EB%B2%A4%ED%8A%B8)
+```python
+ntalk.typing_off(user_id)
+```
+
 ## Template
 
 ```python
