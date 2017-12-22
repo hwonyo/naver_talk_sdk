@@ -13,7 +13,7 @@ import json
 
 from .exceptions import NaverTalkApiError, NaverTalkApiConnectionError
 from .models.responses import NaverTalkResponse, NaverTalkImageResponse
-from .models.payload import ProfilePayload, GenericPayload, ImageUploadPayload, ThreadPayload
+from .models.payload import ProfilePayload, GenericPayload, ImageUploadPayload, ThreadPayload, ActionPayload
 from .models.events import *
 
 from .utils import LOGGER, PY3, _byteify
@@ -215,6 +215,25 @@ class NaverTalkApi(object):
         )
         return self._send(payload, callback=callback)
 
+    def typing_on(self, user_id, callback=None):
+        payload = ActionPayload(
+            user=user_id,
+            options={
+                "action": "typingOn"
+            }
+        )
+
+        return self._send(payload, callback=callback)
+
+    def typing_off(self, user_id, callback=None):
+        payload = ActionPayload(
+            user=user_id,
+            options={
+                "action": "typingOff"
+            }
+        )
+
+        return self._send(payload, callback=callback)
     """
     Decorations
     Help to Handle each events.

@@ -83,3 +83,11 @@ class ThreadPayload(Payload):
             self.options['metadata'] = ""
         if control == 'passThread':
             self.options['target_id'] = 1
+
+class ActionPayload(Payload):
+    """Action Payload for typing_on and typing_off"""
+    def __init__(self, options, **kwargs):
+        super(ActionPayload, self).__init__(**kwargs)
+
+        self.event = 'action'
+        self.options = options
