@@ -27,7 +27,7 @@ __Inspired By : [fbmq](https://github.com/conbus/fbmq) and [line-bot-sdk](https:
       - [@handle_before_process](#handle_before_process)
       - [@after_send](#after_send)
       - [@callback](#callback)
-    - [Send a message](#send-a-message)
+    - [Send message](#send-message)
       - [Text](#text)
       - [Image](#image)
       - [CompositeContent](#compositecontent)
@@ -35,6 +35,8 @@ __Inspired By : [fbmq](https://github.com/conbus/fbmq) and [line-bot-sdk](https:
     - [Utility](#utility)
       - [take_thread](#take_threadself-user_id-partner-callbacknone)
       - [pass_thread](#pass_threadself-user_id-partner-callbacknone)
+      - [typing_on](#typing_onself-user_id-callbacknone)
+      - [typing_off](#typing_offself-user_id-callbacknone)
   - [Template](#template)
     - [TextContent](#textcontent)
     - [ImageContent](#imagecontent)
@@ -303,7 +305,7 @@ def hello_callback_handler(event):
     code = event.code # ex) Hello Naver
 ```
 
-## Send a message
+## Send message
 ### __send(self, user_id, message, quick_reply=None, notification=False, callback=None)__
 
 - user_id *str*: 보내려는 유저의 고유 아이디
@@ -387,7 +389,7 @@ ntalk.pass_thread(
 )
 ```
 
-### __typing_on(self, user_id, callback=None)
+### __typing_on(self, user_id, callback=None)__
 
 - user_id:
 - callback: callback 함수
@@ -396,7 +398,7 @@ ntalk.pass_thread(
 ntalk.typing_on(user_id)
 ``` 
 
-### __typing_off(self, user_id, callback=None)
+### __typing_off(self, user_id, callback=None)__
 
 - user_id: 사용자 아이디
 - callback: callback 함수
