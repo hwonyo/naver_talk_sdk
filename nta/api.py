@@ -22,16 +22,20 @@ from .utils import LOGGER, PY3, _byteify
 class WebhookParser(object):
     """Webhook Parser.
     WebhooParser for parsing json request from navertalk.
-    It returns parsed data in a Template.Event instance
+    It returns parsed data in a Event instance
     with snake case attributes.
     """
 
     def parse(self, req):
-        """Parse webhook request body as text.
+        """
+        Parse webhook request
+        and change into the Event instance
 
-        :param req: Webhook request body (as text)
-        :rtype: Event
-        :return:
+        Args:
+            - req: request body from navertalk
+
+        Returns:
+            - event: Event instance in mdoels.events
         """
         if not PY3:
             req_json = json.loads(req, object_hook=_byteify)
@@ -70,6 +74,12 @@ class NaverTalkApi(object):
     DEFAULT_API_ENDPOINT = 'https://gw.talk.naver.com/chatbot/v1/event'
 
     def __init__(self, naver_talk_access_token, endpoint=DEFAULT_API_ENDPOINT, **options):
+        """ __init__ method.
+
+        Args:
+            - naver_talk_access_token: issued access_token
+            - endpoint: endpoint to post request
+        """
 
         self._endpoint = endpoint
         self._headers = {
@@ -86,6 +96,13 @@ class NaverTalkApi(object):
     _after_send = None
 
     def _call_handler(self, name, event):
+        """
+        Call handler for event matched by name.
+
+        Args:
+              - name: event name
+              - event: event to be handled
+        """
         if name in self._webhook_handlers:
             func = self._webhook_handlers[name]
             func(event)
@@ -128,13 +145,14 @@ class NaverTalkApi(object):
         """
         Send a message to user_id with quick_reply or not.
         If notification True, push alarm occurred on user's phone.
-        Callback function is invoked after sending message to user is Success.
+        Callback function is invoked after sending the message to user is Success.
 
-        :param user_id: Navertalk user_id.
-        :param message: Instances in Template or str are allowed
-        :param quick_reply: add quickReply end of contents.
-        :param notification: On push alarm if True
-        :param callback: Do something after send a message
+        Args:
+            - user_id: Navertalk user_id.
+            - message: Instances in Template or str are allowed
+            - quick_reply: add quickReply end of contents.
+            - notification: on push alarm if True
+            - callback: Do something after send a message
         """
         if not PY3:
             if isinstance(message, unicode):
@@ -171,12 +189,13 @@ class NaverTalkApi(object):
             self._after_send(res, payload)
 
     def request_profile(self, user_id, field, agreements=None, callback=None):
-        """Handle Profile Request
+        """
         Request user's profile with user_id, and agreement fields.
 
-        :param user_id: Target user's id
-        :param field: Target user info nickname|cellphone|addreess
-        :param agreements: List of user's info nickname|cellphone|addreess
+        Args:
+            - user_id: target user's id
+            - field: target user info nickname|cellphone|addreess
+            - agreements: list of user's info nickname|cellphone|addreess
         """
         payload = ProfilePayload(
             user=user_id,
@@ -187,35 +206,62 @@ class NaverTalkApi(object):
         self._send(payload, callback=callback)
 
     def upload_image(self, image_url, callback=None):
-        """Handle Image Upload to navertalk and recieve Image Id.
+        """
+        Upload image with url to navertalk and recieve an Image Id.
 
-        :param image_url: imaegUrl to imageId
-        :param callback: function callback after image upload request.
-        the function will recieve NaverTalkImageResponse and payload.
+        Args:
+            - image_url: imaegUrl to imageId
+            - callback: function callback after image upload request.
+                        the function will recieve models.NaverTalkImageResponse and payload.
         """
         payload = ImageUploadPayload(
             image_url
         )
 
-        return self._send(payload, callback=callback, response_form=NaverTalkImageResponse)
+        self._send(payload, callback=callback, response_form=NaverTalkImageResponse)
 
     def take_thread(self, user_id, partner, callback=None):
+        """
+        take thread from partner for a user's conversation with user_id
+
+         Args:
+             - user_id: target user
+             - partner: target partner
+             - callback: function callback
+        """
         payload = ThreadPayload(
             user=user_id,
             partner=partner,
             control="takeThread"
         )
-        return self._send(payload, callback=callback)
+
+        self._send(payload, callback=callback)
 
     def pass_thread(self, user_id, partner, callback=None):
+        """
+        pass thread to partner for a user's conversation with user_id
+
+        Args:
+             - user_id: target user
+             - partner: target partner
+             - callback: function callback
+        """
         payload = ThreadPayload(
             user=user_id,
             partner=partner,
             control="passThread"
         )
-        return self._send(payload, callback=callback)
+
+        self._send(payload, callback=callback)
 
     def typing_on(self, user_id, callback=None):
+        """
+        make typing_on action on
+
+        Args:
+             - user_id: target user
+             - callback: function callback
+        """
         payload = ActionPayload(
             user=user_id,
             options={
@@ -223,9 +269,16 @@ class NaverTalkApi(object):
             }
         )
 
-        return self._send(payload, callback=callback)
+        self._send(payload, callback=callback)
 
     def typing_off(self, user_id, callback=None):
+        """
+        make typing_on action off
+
+        Args:
+             - user_id: target user
+             - callback: function callback
+        """
         payload = ActionPayload(
             user=user_id,
             options={
@@ -233,10 +286,11 @@ class NaverTalkApi(object):
             }
         )
 
-        return self._send(payload, callback=callback)
+        self._send(payload, callback=callback)
+
     """
-    Decorations
-    Help to Handle each events.
+    Decorators
+    for Handling each events.
     """
     def handle_open(self, func):
         """open decorator"""
@@ -287,10 +341,11 @@ class NaverTalkApi(object):
         self._after_send = func
 
     def callback(self, *args):
-        """Callback wrapper for handling code value.
+        """
+        Callback wrapper for handling code value.
+        Regular expression can be used for mathching with code value.
 
-        Decorator
-        Decorated function will be invoked by matching regular expression.
+        Args: callbale or list of target code values
         """
         def wrapper(func):
             if not isinstance(args[0], list):
@@ -304,11 +359,14 @@ class NaverTalkApi(object):
         self._default_button_callback = args[0]
 
     def get_code_callbacks(self, code):
-        """get_code_callbacks
-        Find decorated function with code.
+        """
+        find callback handlers matched by code value with regular expression.
 
-        :param code: code from custom button.
-        "rtype: function
+        Args:
+            - code: code value from a button.
+
+        Return:
+            - callbacks: function callbacaks matched by code value
         """
         callbacks = []
         for key in self._button_callbacks.keys():
@@ -323,8 +381,9 @@ class NaverTalkApi(object):
         return callbacks
 
     def __error_check(self, response):
-        """check error from navertalk.
-        When recieved success false, NaverTalkApiError raised.
+        """
+        check error from navertalk.
+        When recieved success false, raise NaverTalkApiError.
         """
         if not response.success:
             raise NaverTalkApiError(response)
