@@ -32,8 +32,13 @@ class TestNaverTalkAPI(unittest.TestCase):
         def test_callback(res, payload):
             self.assertEqual(res.result_code, "00")
             self.assertEqual(res.success, True)
-            self.assertEqual(payload.field, 'nickname')
-            self.assertEqual(payload.agreements, ['cellphone', 'address'])
+            self.assertEqual(
+                payload.options,
+                {
+                    "field": "nickname",
+                    "agreements": ["cellphone", "address"]
+                }
+            )
             counter()
 
         self.tested.request_profile(

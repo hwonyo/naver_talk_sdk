@@ -3,24 +3,32 @@ from .template import *
 
 
 class Payload(Base):
-    """Base class of payload"""
+    """
+    Base class of payload
+    """
     def __init__(self, user, **kwargs):
+        """ __init__ method.
+
+         Args:
+             - user: user_id
+        """
         super(Payload, self).__init__(**kwargs)
 
         self.user = user
 
 
 class GenericPayload(Payload):
-    """General Payload
-    For Send message to users.
+    """
+    General Payload
+    For Send a message to users.
     """
     def __init__(self, message, quick_reply=None, notification=False, **kwargs):
-        """___init__ method.
+        """__init__ method.
 
-        :param message: Template to send
-        :param quick_reply: quick_reply to send
-        :param notification: set push alarm
-        :param kwargs:
+        Args:
+            - message: str or Template.TextContent
+            - quick_reply: list of buttons or Template.QuickReply
+            - notification: boolean
         """
         super(GenericPayload, self).__init__(**kwargs)
 
@@ -43,9 +51,17 @@ class GenericPayload(Payload):
 
 
 class ProfilePayload(Payload):
-    """Porfile Payload
-    For request user's profile."""
+    """
+    Porfile Payload
+    for request user's profile
+    """
     def __init__(self, field, agreements=None, **kwargs):
+        """ __init__ method.
+
+        Args:
+            - field:
+            - agreemetns:
+        """
         super(ProfilePayload, self).__init__(**kwargs)
 
         self.event = 'profile'
@@ -54,24 +70,21 @@ class ProfilePayload(Payload):
             'agreements': agreements
         }
 
-    @property
-    def field(self):
-        return self.options.get('field')
-
-    @property
-    def agreements(self):
-        return self.options.get('agreements')
 
 
 class ImageUploadPayload(Payload):
-    """ImageUpload Payload
-    For Upload image."""
+    """
+    ImageUpload Payload
+    for Upload image
+    """
     def __init__(self, image_url, **kwargs):
 
         self.image_url = image_url
 
 class ThreadPayload(Payload):
-    """Thread Payload"""
+    """
+    Thread Payload
+    """
     def __init__(self, partner, control, **kwargs):
         super(ThreadPayload, self).__init__(**kwargs)
         self.event = 'handover'
@@ -85,7 +98,9 @@ class ThreadPayload(Payload):
             self.options['target_id'] = 1
 
 class ActionPayload(Payload):
-    """Action Payload for typing_on and typing_off"""
+    """
+    Action Payload for typing_on and typing_off
+    """
     def __init__(self, options, **kwargs):
         super(ActionPayload, self).__init__(**kwargs)
 
