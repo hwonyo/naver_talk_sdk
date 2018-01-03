@@ -264,9 +264,7 @@ class NaverTalkApi(object):
         """
         payload = ActionPayload(
             user=user_id,
-            options={
-                "action": "typingOn"
-            }
+            action="typingOn"
         )
 
         self._send(payload, callback=callback)
@@ -281,9 +279,7 @@ class NaverTalkApi(object):
         """
         payload = ActionPayload(
             user=user_id,
-            options={
-                "action": "typingOff"
-            }
+            action="typingOff"
         )
 
         self._send(payload, callback=callback)

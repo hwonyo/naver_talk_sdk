@@ -59,8 +59,8 @@ class ProfilePayload(Payload):
         """ __init__ method.
 
         Args:
-            - field:
-            - agreemetns:
+            - field: user profile information to get.
+            - agreemetns: user profile information to get agreement.
         """
         super(ProfilePayload, self).__init__(**kwargs)
 
@@ -78,6 +78,11 @@ class ImageUploadPayload(Payload):
     for Upload image
     """
     def __init__(self, image_url, **kwargs):
+        """__init__ method.
+
+        Args:
+            - image_url: full image url to convert
+        """
 
         self.image_url = image_url
 
@@ -86,6 +91,12 @@ class ThreadPayload(Payload):
     Thread Payload
     """
     def __init__(self, partner, control, **kwargs):
+        """__init__ method
+
+        Args:
+            - partner: partner id
+            - control: "takeThread" or "passThread"
+        """
         super(ThreadPayload, self).__init__(**kwargs)
         self.event = 'handover'
         self.partner = partner
@@ -101,8 +112,15 @@ class ActionPayload(Payload):
     """
     Action Payload for typing_on and typing_off
     """
-    def __init__(self, options, **kwargs):
+    def __init__(self, action, **kwargs):
+        """__init__ method.
+
+        Args:
+            - action: "typingOn" or "typingOff"
+        """
         super(ActionPayload, self).__init__(**kwargs)
 
         self.event = 'action'
-        self.options = options
+        self.options = {
+            "action": action
+        }
