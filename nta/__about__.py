@@ -1,4 +1,6 @@
-"""Meta data of naver-talk-sdk"""
+"""
+Meta data for naver-talk-sdk
+"""
 
 __version__ = '0.0.6'
 __author__ = 'WonYoHwang'

@@ -6,8 +6,8 @@ class BaseTemplate(Base):
     def __init__(self, quick_reply=None, **kwargs):
         """__init__method.
 
-        :param list quick_reply: Buttons List
-        :param: **kwargs
+        Args:
+            - quick_reply: list of Template.Buttons or Template.QuickReply
         """
         super(BaseTemplate, self).__init__(**kwargs)
 
@@ -41,10 +41,10 @@ class ImageContent(BaseTemplate):
 
 class CompositeContent(BaseTemplate):
     def __init__(self, composite_list, **kwargs):
-        """__init__method.
+        """__init__ method.
 
-        :param list composite_list: list of Composites
-        :param kwargs:
+        Args:
+            - composite_list: list of Composites
         """
         super(CompositeContent, self).__init__(**kwargs)
 
@@ -52,15 +52,20 @@ class CompositeContent(BaseTemplate):
 
 
 class Composite(BaseTemplate):
+    """
+    Composite
+    content element for CompositeContent
+
+    """
     def __init__(self, title, description=None, image=None, element_list=None, button_list=None, **kwargs):
         """__init__method.
 
-        :param str title:
-        :param str description:
-        :param str image:
-        :param ElementList element_list:
-        :param list button_list:
-        :param kwargs:
+        Args:
+            - title: str
+            - description: str
+            - image: image url
+            - element_list: list of Template.Elements
+            - button_list: list of Template.buttons or dict buttons
         """
         super(Composite, self).__init__(**kwargs)
 
@@ -82,15 +87,7 @@ class ElementList(BaseTemplate):
 
 class ElementData(Base):
     def __init__(self, title, description=None, sub_description=None, image=None, button=None, **kwargs):
-        """__init__method.
-
-        :param str title:
-        :param str description:
-        :param str sub_description:
-        :param str image:
-        :param ButtonText button:
-        :param kwargs:
-        """
+        """__init__ method."""
         super(ElementData, self).__init__(**kwargs)
 
         self.title = title
@@ -123,21 +120,6 @@ class PaymentInfo(Base):
             purchaser_birthday=None,
             **kwargs
     ):
-        """__init__ method.
-
-        :param merchant_pay_key:
-        :param total_pay_amount:
-        :param product_items:
-        :param merchant_user_key:
-        :param product_name:
-        :param product_count:
-        :param delivery_fee:
-        :param tax_scope_amount:
-        :param tax_ex_scope_amount:
-        :param purchaser_name:
-        :param purchaser_birthday:
-        :param kwargs:
-        """
         super(PaymentInfo, self).__init__(**kwargs)
 
         self.merchant_pay_key = merchant_pay_key
@@ -166,18 +148,6 @@ class ProductItem(Base):
             count=None,
             **kwargs
     ):
-        """__init__ method.
-
-        :param category_type:
-        :param category_id:
-        :param uid:
-        :param name:
-        :param start_date:
-        :param end_date:
-        :param seller_id:
-        :param count:
-        :param kwargs:
-        """
         super(ProductItem, self).__init__(**kwargs)
 
         self.category_type = category_type

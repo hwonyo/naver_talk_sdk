@@ -265,7 +265,6 @@ class TestNaverTalkApi(unittest.TestCase):
         self.tested.webhook_handler(json.dumps(event))
         self.assertEqual(counter.call_count, 1)
 
-
     def test_standby_true(self):
         event = {
             'standby': True,
