@@ -1,8 +1,13 @@
 #-*- encoding:utf-8 -*-
+"""
+    Example code for nta
+    See how it works: https://talk.naver.com/ct/wc4qdz
+"""
 import os
 from flask import Flask, request
-from nta import NaverTalkApi, Template, NaverTalkApiError, Button, NaverTalkPaymentError, NaverTalkApiConnectionError
 
+from nta import NaverTalkApi, Template, Button
+from nta import NaverTalkApiError, NaverTalkPaymentError, NaverTalkApiConnectionError
 
 NAVER_TALK_ACCESS_TOKEN = os.environ['naver_talk_access_token']
 
@@ -52,17 +57,27 @@ def send_handler(event):
     """
     if event.is_code:
         return
-
     user_id = event.user_id
+    text = event.text
+
+    #주도권이 파트너에게 있는 경우 standby는 True
     if event.standby:
         ntalk.send(
             user_id=user_id,
             message="쓰레드 작동중 !!",
             quick_reply=Template.QuickReply([Button.ButtonText('쓰레드 가져오기', 'TakeThread')])
         )
-        return
-    text = event.text
-    ntalk.send(user_id, "당신이 한 말을 그대로 반환 나는 메아리: %s" % text)
+    else:
+        ntalk.send(
+            user_id,
+            "당신이 한 말을 그대로 반환 나는 메아리: %s" % text,
+            quick_reply=Template.QuickReply([Button.ButtonText('카드뷰 보기', 'CardView')])
+        )
+
+
+@ntalk.callback(['CardView'])
+def carview_show(event):
+    user_id = event.user_id
     ntalk.send(
         user_id,
         message=Template.CompositeContent(
@@ -71,15 +86,16 @@ def send_handler(event):
                     title='페이로드 백을 담은 카드뷰',
                     description='상세 설명',
                     button_list=[
-                        {'type': 'TEXT', 'title': '쓰레드 넘김', 'value': 'PassThread'},
-                        Button.ButtonText('타이핑 액션', 'TYPING_ON')
+                        Button.ButtonText('쓰레드 넘김', 'PassThread'),
+                        Button.ButtonText('타이핑 액션', 'TYPING_ON'),
+                        Button.ButtonText('프로필 보기', 'Profile')
                     ]
                 ),
                 Template.Composite(
                     title='링크 버튼을 담은 카드뷰',
                     description='이건 회색 글씨로 나온다!',
                     button_list=[
-                        {'type': 'LINK', 'title': 'nta github page', 'value': 'https://github.com/HwangWonYo/naver_talk_sdk'},
+                        Button.ButtonLink('nta github page', 'https://github.com/HwangWonYo/naver_talk_sdk'),
                         Button.ButtonLink('네이버 파트너 센터', 'https://partner.talk.naver.com/')
                     ]
                 )
@@ -115,6 +131,45 @@ def thread_take(event):
         partner="wc4qdz"
     )
     ntalk.send(user_id, "쓰레드 반환 받기 성공")
+
+@ntalk.callback(['Profile'])
+def show_profile(event):
+    user_id = event.user_id
+    ntalk.request_profile(
+        user_id,
+        field="nickname",
+        agreements=["cellphone", "address"]
+    )
+
+
+@ntalk.handle_friend
+def friend_event_handler(event):
+    user_id = event.user_id
+    if event.set_on:
+        message = "친구추가해줘서 고마워"
+    else:
+        message = "우정이 이렇게 쉽게 깨지는 거였나.."
+
+    ntalk.send(user_id, message)
+
+
+@ntalk.handle_handover
+def hand_over_handler(event):
+    user_id = event.user_id
+    ntalk.send(
+        user_id,
+        "이제 주도권은 나의 손에!"
+    )
+
+
+@ntalk.handle_profile
+def profile_handler(event):
+    user_id = event.user_id
+    nickname = event.nickname
+    ntalk.send(
+        user_id,
+        "안녕 {}".format(nickname)
+    )
 
 
 @ntalk.after_send
