@@ -3,7 +3,7 @@
     nta
     ~~~
 
-    :copyright: (c) 2017 by Wonyo Hwang.
+    :copyright: (c) 2017 by Wonyo Hwang. hollal0726@gmail.com
     :license: MIT, see LICENSE for more details.
 
 """
@@ -379,7 +379,7 @@ class NaverTalkApi(object):
     def __error_check(self, response):
         """
         check error from navertalk.
-        When recieved success false, raise NaverTalkApiError.
+        When recieved success: false, raise NaverTalkApiError.
         """
         if not response.success:
             raise NaverTalkApiError(response)
