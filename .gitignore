@@ -10,4 +10,5 @@ Gemfile
 /docs/_build
 py2/
 /dist
-example/
+/example/**
+!/example/example.py
