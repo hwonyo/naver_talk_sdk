@@ -10,10 +10,10 @@ class NaverTalkResponse(Response):
     def __init__(self, success, result_code, result_message=None, **kwargs):
         """__init__ method.
 
-        :param success: True or False
-        :param result_code: str result code can see more info in navertalk github page.
-        :param result_message: str result message when request failed.
-        :param kwargs:
+        Args:
+            -success: True or False
+            -result_code: str result code can see more info in navertalk github page.
+            -result_message: str result message when request failed.
         """
         super(NaverTalkResponse, self).__init__(**kwargs)
 
@@ -28,11 +28,11 @@ class NaverTalkImageResponse(Response):
     def __init__(self, success, result_code, image_id=None, result_message=None, **kwargs):
         """ __init__ method.
 
-        :param success: True or False
-        :param result_code: str result code can see more info in navertalk github page.
-        :param image_id: str image_id when request success.
-        :param result_message: str result message when request failed.
-        :param kwargs:
+        Args:
+            -success: True or False
+            -result_code: str result code can see more info in navertalk github page.
+            -image_id: str image_id when request success.
+            -result_message: str result message when request failed.
         """
         super(NaverTalkImageResponse, self).__init__(**kwargs)
 
