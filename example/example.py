@@ -68,9 +68,10 @@ def send_handler(event):
             quick_reply=Template.QuickReply([Button.ButtonText('쓰레드 가져오기', 'TakeThread')])
         )
     else:
+        ntalk.send(user_id, "따라한다.")
         ntalk.send(
             user_id,
-            "당신이 한 말을 그대로 반환 나는 메아리: %s" % text,
+            text,
             quick_reply=Template.QuickReply([Button.ButtonText('카드뷰 보기', 'CardView')])
         )
 
@@ -131,6 +132,7 @@ def thread_take(event):
         partner="wc4qdz"
     )
     ntalk.send(user_id, "쓰레드 반환 받기 성공")
+
 
 @ntalk.callback(['Profile'])
 def show_profile(event):
