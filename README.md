@@ -72,6 +72,7 @@ pip install nta
 
 ## Synopsis
 Usage (with flask)
+
 ```python
 from flask import Flask, request
 from nta import NaverTalkApi, NaverTalkApiError
@@ -116,8 +117,10 @@ def send_handler(event):
         user_id,
         "Echo Message: %s" % text
     )
-
 ```
+See more detail example code: [example/example.py](https://github.com/HwangWonYo/naver_talk_sdk/blob/master/example/example.py)
+
+And see also implemented naver talktalk agent: https://talk.naver.com/ct/wc4qdz 
 
 # API
 
