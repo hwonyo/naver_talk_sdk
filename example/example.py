@@ -97,13 +97,76 @@ def carview_show(event):
                     description='이건 회색 글씨로 나온다!',
                     button_list=[
                         Button.ButtonLink('nta github page', 'https://github.com/HwangWonYo/naver_talk_sdk'),
-                        Button.ButtonLink('네이버 파트너 센터', 'https://partner.talk.naver.com/')
+                        Button.ButtonLink('네이버 파트너 센터', 'https://partner.talk.naver.com/'),
+                        Button.ButtonText('ElementList 카드뷰', 'ElementListCardView')
                     ]
                 )
             ]
         )
     )
 
+@ntalk.callback(['ElementListCardView'])
+def show_element_list_card_view(event):
+    user_id = event.user_id
+    ntalk.send(
+        user_id,
+        message=Template.CompositeContent(
+            composite_list=[
+                Template.Composite(
+                    title='엘리먼트 리스트 카드뷰 1',
+                    description='element는 3개까지 가능',
+                    element_list=Template.ElementList(
+                        data=[
+                            Template.ElementData(
+                                title='쓰레드 넘김',
+                                description='파트너에게 쓰레드를 넘긴다',
+                                sub_description='그러면 standby는 True',
+                                button=Button.ButtonText('쓰레드 넘김', 'PassThread')
+                            ),
+                            Template.ElementData(
+                                title='타이핑 액션',
+                                description='다른 입력이 들어오면 꺼진다',
+                                sub_description='10초간 지속된다.',
+                                button=Button.ButtonText('타이핑 액션', 'TYPING_ON')
+                            ),
+                            Template.ElementData(
+                                title='프로필 보기',
+                                description='프로필 이벤트가 발생한다.',
+                                sub_description='이벤트로 발생해서 사용하기 어려움...',
+                                button=Button.ButtonText('프로필 보기', 'Profile')
+                            ),
+                        ]
+                    )
+                ),
+                Template.Composite(
+                    title='엘리먼트 리스트 카드뷰 2',
+                    description='element는 3개까지 가능',
+                    element_list=Template.ElementList(
+                        data=[
+                            Template.ElementData(
+                                title='nta 깃헙 페이지',
+                                description='파이썬 개발시 용이하다',
+                                sub_description='쓸만하다',
+                                button=Button.ButtonLink('nta github page', 'https://github.com/HwangWonYo/naver_talk_sdk'),
+                            ),
+                            Template.ElementData(
+                                title='파트너 센터 페이지',
+                                description='네이버 톡톡 챗봇의 시작',
+                                sub_description='계정은 각자 만들어야 한다',
+                                button=Button.ButtonLink('네이버 파트너 센터', 'https://partner.talk.naver.com/'),
+                            ),
+                            Template.ElementData(
+                                title='카드뷰',
+                                description='카드뷰로 보여준다',
+                                sub_description='사용은 각자에게 달려있다',
+                                button=Button.ButtonText('카드뷰', 'CardView')
+                            ),
+                        ]
+                    )
+                )
+            ]
+        )
+    )
 
 @ntalk.callback(['TYPING_ON'])
 def action_typing(event):
