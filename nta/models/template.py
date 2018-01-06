@@ -93,7 +93,8 @@ class ElementData(Base):
         self.title = title
         self.description = description
         self.sub_description = sub_description
-        self.image = ImageContent(image)
+        if image is not None:
+            self.image = ImageContent(image)
         self.button = button
 
 
