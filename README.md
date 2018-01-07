@@ -5,11 +5,13 @@
 [![PyPI](https://img.shields.io/pypi/l/nta.svg?v=1&maxAge=2592000?)](https://pypi.python.org/pypi/nta)
 
 SDK of the NAVER TALK API for Python
+__Inspired By : [fbmq](https://github.com/conbus/fbmq) and [line-bot-sdk](https://github.com/line/line-bot-sdk-python)__
 
 > 네이버 톡톡 파이썬 모듈입니다.<br>
-> 톡톡에서 발생하는 "__이벤트를 중심__"으로 효율적인 코드를 짤 수 있습니다. 
+> 톡톡에서 발생하는 "__이벤트를 중심__"으로 효율적인 코드를 짤 수 있습니다. <br>
+> [callback handler](#callback)를 이용하면 버튼의 payload 값에 따라 처리를 분기할 수 있습니다.
 
-__Inspired By : [fbmq](https://github.com/conbus/fbmq) and [line-bot-sdk](https://github.com/line/line-bot-sdk-python)__
+
 # About the NAVERTALK Messaging API
 ## Table of Contents
 
