@@ -4,7 +4,7 @@
 [![Build Status](https://travis-ci.org/HwangWonYo/naver_talk_sdk.svg?branch=master)](https://travis-ci.org/HwangWonYo/naver_talk_sdk)
 [![PyPI](https://img.shields.io/pypi/l/nta.svg?v=1&maxAge=2592000?)](https://pypi.python.org/pypi/nta)
 
-SDK of the NAVER TALK API for Python
+SDK of NAVER TALK API for Python
 __Inspired By : [fbmq](https://github.com/conbus/fbmq) and [line-bot-sdk](https://github.com/line/line-bot-sdk-python)__
 
 > 네이버 톡톡 파이썬 모듈입니다.<br>
@@ -12,7 +12,7 @@ __Inspired By : [fbmq](https://github.com/conbus/fbmq) and [line-bot-sdk](https:
 > [callback handler](#callback)를 이용하면 버튼의 payload 값에 따라 처리를 분기할 수 있습니다.
 
 
-# About the NAVERTALK Messaging API
+# About NAVERTALK Messaging API
 ## Table of Contents
 
 * [Install](#install)

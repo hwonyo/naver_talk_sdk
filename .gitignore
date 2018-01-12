@@ -9,6 +9,7 @@ setup.*
 Gemfile
 /docs/_build
 py2/
+py36/
 /dist
 /example/**
 !/example/example.py
