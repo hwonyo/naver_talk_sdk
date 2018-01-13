@@ -13,28 +13,19 @@ class Base(object):
     """
 
     def __init__(self, **kwargs):
-        """__init__ method.
-        :param kwargs:
-        """
+        """__init__ method."""
         pass
 
     def __str__(self):
-        """__str__ method.
-        :return:
-        """
+        """__str__ method."""
         return self.as_json_string()
 
     def __repr__(self):
-        """__repr__ method.
-        :return:
-        """
+        """__repr__ method. """
         return str(self)
 
     def __eq__(self, other):
-        """__eq__ method.
-        :param other:
-        :return:
-        """
+        """__eq__ method."""
         if isinstance(other, dict):
             return other == self.as_json_dict()
         elif isinstance(other, Base):
@@ -42,22 +33,18 @@ class Base(object):
         return other == str(self)
 
     def __ne__(self, other):
-        """__ne__ method.
-        :param other:
-        :return:
-        """
+        """__ne__ method."""
         return not self.__eq__(other)
 
     def as_json_string(self):
-        """Return JSON string from this object.
-        :rtype: str
-        :return:
+        """
+        Return JSON string from this object
         """
         return json.dumps(self.as_json_dict(), sort_keys=True)
 
     def as_json_dict(self):
-        """Return dictionary from this object.
-        :return: dict
+        """
+        Return dictionary from this object.
         """
         data = {}
         for key, sub_obj in self.__dict__.items():
@@ -98,10 +85,8 @@ class Base(object):
 
     @classmethod
     def new_from_json_dict(cls, data):
-        """Create a new instance from a dict.
-        :param data: JSON dict
-        :rtype:
-        :return:
+        """
+        Create a new instance from a dict
         """
         new_data = cls.dict_to_snake_case(data)
 
@@ -109,10 +94,8 @@ class Base(object):
 
     @classmethod
     def dict_to_snake_case(cls, data):
-        """Convert dict key into snake_case
-
-        :param dict data:
-        :return:
+        """
+        Convert dict key into snake_case
         """
         if isinstance(data, dict):
             new_data = {utils.to_snake_case(key): cls.dict_to_snake_case(value)
