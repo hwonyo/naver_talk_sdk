@@ -41,13 +41,24 @@ def do_something_before_event_handle(event):
     print('* EventType: %10s' % event.__class__.__name__)
     print('* User Id  : %10s '% event.user_id)
 
+
 @ntalk.handle_open
 def open_handler(event):
     user_id = event.user_id
     ntalk.send(
         user_id,
-        "테스트에 성공했구나 :)"
+        "테스트에 성공했구나 :)",
+        quick_reply=Template.QuickReply([
+            Button.ButtonLink(
+                "코드 보러가기",
+                "https://github.com/HwangWonYo/naver_talk_sdk/blob/master/example/example.py"
+            ),
+            Button.ButtonText(
+                "따라 말하기"
+            )
+        ])
     )
+
 
 @ntalk.handle_send
 def send_handler(event):
@@ -68,7 +79,11 @@ def send_handler(event):
             quick_reply=Template.QuickReply([Button.ButtonText('쓰레드 가져오기', 'TakeThread')])
         )
     else:
-        ntalk.send(user_id, "따라한다.")
+        ntalk.send(
+            user_id,
+            "무슨 말을 해도 따라합니다.\n"
+            "카드뷰 형식을 보고 싶으면 퀵리플라이 클릭"
+        )
         ntalk.send(
             user_id,
             text,
@@ -104,6 +119,7 @@ def carview_show(event):
             ]
         )
     )
+
 
 @ntalk.callback(['ElementListCardView'])
 def show_element_list_card_view(event):
@@ -168,6 +184,7 @@ def show_element_list_card_view(event):
         )
     )
 
+
 @ntalk.callback(['TYPING_ON'])
 def action_typing(event):
     print("Activate typing_on")
@@ -183,7 +200,11 @@ def thread_pass(event):
         user_id=user_id,
         partner="wc4qdz"
     )
-    ntalk.send(user_id, "쓰레드 넘기기 성공")
+    ntalk.send(
+        user_id,
+        "쓰레드 넘기기 성공\n"
+        "따라하기 기능이 불가능합니다."
+    )
 
 
 @ntalk.callback(['TakeThread'])
@@ -194,7 +215,11 @@ def thread_take(event):
         user_id=user_id,
         partner="wc4qdz"
     )
-    ntalk.send(user_id, "쓰레드 반환 받기 성공")
+    ntalk.send(
+        user_id,
+        "쓰레드 반환 받기 성공\n"
+        "다시 따라하기 기능이 가능합니다."
+    )
 
 
 @ntalk.callback(['Profile'])
