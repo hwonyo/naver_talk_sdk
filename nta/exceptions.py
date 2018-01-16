@@ -69,8 +69,8 @@ class NaverTalkApiConnectionError(BaseError):
 
 class NaverTalkPaymentError(BaseError):
     """
-    Exception for handling Payment fail easily
-    for example when pay event occurred for any stuff and the stuff running out,
+    Exception for handling Payment to fail easily
+    for example when pay event occurred for some stuff and the stuff running out,
     raise NaverTalkPaymentError and catch exception to make another action
     """
     def __init__(self, message='-'):
