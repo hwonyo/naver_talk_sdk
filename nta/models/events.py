@@ -183,7 +183,7 @@ class PayConfirmEvent(Event):
     def __init__(self, options, **kwargs):
         super(PayConfirmEvent, self).__init__(**kwargs)
 
-        self.type = 'pay_confirm'
+        self.event = 'pay_confirm'
         self.options = options
 
     @property
@@ -249,6 +249,8 @@ class HandOverEvent(Event):
     """
     def __init__(self, **kwargs):
         super(HandOverEvent, self).__init__(**kwargs)
+
+        self.event = 'handover'
 
     @property
     def control(self):

@@ -118,28 +118,13 @@ class NaverTalkApi(object):
         if event is not None:
             if self._before_process:
                 self._before_process(event)
-            if isinstance(event, OpenEvent):
-                self._call_handler('open', event)
-            elif isinstance(event, SendEvent):
+            if isinstance(event, SendEvent):
                 if event.is_code:
                     _matched_callbacks = self.get_code_callbacks(event.code)
                     for callback in _matched_callbacks:
                         callback(event)
-                self._call_handler('send', event)
-            elif isinstance(event, LeaveEvent):
-                self._call_handler('leave', event)
-            elif isinstance(event, FriendEvent):
-                self._call_handler('friend', event)
-            elif isinstance(event, ProfileEvent):
-                self._call_handler('profile', event)
-            elif isinstance(event, PayCompleteEvent):
-                self._call_handler('pay_complete', event)
-            elif isinstance(event, PayConfirmEvent):
-                self._call_handler('pay_confirm', event)
-            elif isinstance(event, EchoEvent):
-                self._call_handler('echo', event)
-            elif isinstance(event, HandOverEvent):
-                self._call_handler('handover', event)
+            name = event.event
+            self._call_handler(name, event)
 
     def send(self, user_id, message, quick_reply=None, notification=False, callback=None):
         """
