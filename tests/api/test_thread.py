@@ -74,7 +74,6 @@ class TestNaverTalkAPI(unittest.TestCase):
         def test_callback(res, payload):
             self.assertEqual(res.result_code, "00")
             self.assertEqual(res.success, True)
-            print(payload)
             self.assertEqual(
                 payload,
                 {
