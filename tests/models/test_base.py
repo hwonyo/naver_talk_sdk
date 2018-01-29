@@ -84,7 +84,19 @@ class TestBaseTemplate(unittest.TestCase):
         )
         self.assertTrue(isinstance(new_event, events.LeaveEvent))
 
-    # def test_others(self):
+    def test_others(self):
+        new_event = events.LeaveEvent.new_from_json_dict(
+            {
+                "event": "leave",
+                "user": "al-2eGuGr5WQOnco1_V-FQ"
+            }
+
+        )
+        self.assertEqual(str(new_event), new_event.as_json_string())
+        self.assertEqual(str(new_event), repr(new_event))
+        self.assertTrue(new_event == new_event.as_json_dict())
+        self.assertTrue(new_event == str(new_event))
+        self.assertFalse(new_event != new_event)
 
 
 
