@@ -1,7 +1,7 @@
-#-*- encoding:utf8 -*-
-'''navertalk.exceptions module.'''
+'''
+navertalk.exceptions module
+'''
 from __future__ import unicode_literals
-from .utils import LOGGER
 
 class BaseError(Exception):
     """Base Exception class"""
@@ -66,6 +66,7 @@ class NaverTalkApiConnectionError(BaseError):
 
         self.status_code = response.status_code
         self.response = response
+
 
 class NaverTalkPaymentError(BaseError):
     """

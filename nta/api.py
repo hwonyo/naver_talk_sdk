@@ -1,4 +1,3 @@
-#-*- unicode: utf-8 -*-
 """
     nta
     ~~~
