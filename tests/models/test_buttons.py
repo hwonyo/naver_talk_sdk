@@ -36,10 +36,33 @@ class TestNaverTalkApi(unittest.TestCase):
         self.assertEqual(btn, {'type': 'TEXT', 'data': {'title': 'test_title', 'code': 'test_payload'}})
 
     def test_link_button(self):
-        btn = ButtonLink('test_title', 'test_url.com')
+        btn1 = ButtonLink('test_title', 'test_url.com')
         self.assertEqual(
-            btn,
+            btn1,
             {'type': 'LINK', 'data': {'title': 'test_title', 'url': 'test_url.com', 'mobileUrl': None}}
+        )
+
+        btn2 = ButtonLink(
+            'test_webview_button',
+            'test_url.com',
+            'test_webview_url.com',
+            webview=True,
+            webview_title='webview_title',
+            webview_height=50
+        )
+        self.assertEqual(
+            btn2,
+            {'type': 'LINK',
+             'data': {
+                 'title': 'test_webview_button',
+                 'url': 'test_url.com',
+                 'mobileUrl': 'test_webview_url.com',
+                 'mobileTarget': 'webview',
+                 'mobileTargetAttr': {
+                     'webviewHeight': 50,
+                     'webviewTitle': 'webview_title'
+                 }}
+             }
         )
 
     def test_option_button(self):
