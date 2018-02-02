@@ -12,3 +12,9 @@ install:
 script: nosetests --with-coverage --cover-package=nta
 after_success:
   coveralls
+
+# safelist
+branches:
+  only:
+  - master
+  - develop
