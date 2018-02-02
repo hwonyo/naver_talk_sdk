@@ -67,7 +67,7 @@ class ButtonLink(Buttons):
     ButtonLink for link button to use quickReply and Composite button.
     Links to url address when user click the button.
     """
-    def __init__(self, title, url, mobile_url=None, **kwargs):
+    def __init__(self, title, url, mobile_url=None, webview=False, webview_title=None, webview_height=None, **kwargs):
         """ __init__ method.
 
         :param title: exposed text on the button
@@ -83,6 +83,12 @@ class ButtonLink(Buttons):
             "url":url,
             "mobile_url": mobile_url
         }
+        if webview:
+            self.data['mobile_target'] = 'webview'
+            self.data['mobile_target_attr'] = {
+                "webview_title": webview_title,
+                "webview_height": webview_height
+            }
 
 
 class ButtonOption(Buttons):
