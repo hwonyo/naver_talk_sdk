@@ -574,14 +574,25 @@ Button.ButtonText('보여지는 타이틀', '숨겨진 코드값')
 ```
 
 ### ButtonLink
-> __init__(self, title, url, mobile_url=None, **kwargs)
+> __init__(self, title, url, mobile_url=None, webview=True, webview_title=None, webview_height=None, **kwargs)
 
 - title: 보여지는 버튼 값.
 - url : 연결되는 링크
 - mobile_url: 모바일 상에서 연결되는 링크.
+- webview: True or False. If True, activate webview button
+- webview_title: title of webview
+- webview_height: size ratio of webview
 - 자세한 정보 [buttonLink](https://github.com/navertalk/chatbot-api#buttondata-object-link-타입)
+- webview에 대한 정보 [webview](https://github.com/navertalk/chatbot-api/blob/master/webview_v1.md)
 ```python
-Button.ButtonLink("title showed up", "Linked URL", mobile_url="#Linked URL in Mobile device")
+Button.ButtonLink(
+        "title showed up", 
+        "Linked URL", 
+        mobile_url="#Linked URL in Mobile device",
+        webview=True,
+        webview_title="Title of webview",
+        webview_height=50
+    )
 ```
 
 ### ButtonOption

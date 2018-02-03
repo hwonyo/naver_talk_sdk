@@ -1,4 +1,3 @@
-#-*- unicode: utf-8 -*-
 """
     nta
     ~~~
@@ -21,8 +20,8 @@ from .utils import LOGGER, PY3, _byteify
 
 class WebhookParser(object):
     """Webhook Parser.
-    WebhooParser for parsing json request from navertalk.
-    It returns parsed data in a Event instance
+    WebhookParser for parsing json request from navertalk.
+    It returns parsed data in an Event instance
     with snake case attributes.
     """
 

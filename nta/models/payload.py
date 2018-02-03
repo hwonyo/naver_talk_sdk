@@ -1,5 +1,5 @@
-from .base import Base
 from .template import *
+from .base import Base
 
 
 class Payload(Base):
