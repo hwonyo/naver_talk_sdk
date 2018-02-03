@@ -141,6 +141,12 @@ class TestNaverTalkApi(unittest.TestCase):
             'imageContent': {
                 'imageUrl': 'https://example_image.png'
             },
+            'textContent':{
+                'text':'text_from_test'
+            },
+            'compositeContent': {
+                'compositeList':[]
+            },
             'options': {
                 'mobile': False
             }
@@ -152,6 +158,9 @@ class TestNaverTalkApi(unittest.TestCase):
             self.assertTrue(isinstance(event, EchoEvent))
             self.assertEqual('test_user_id', event.user_id)
             self.assertEqual('send', event.echoed_event)
+            self.assertEqual({'text':'text_from_test'}, event.text_content)
+            self.assertEqual({'composite_list':[]}, event.composite_content)
+            self.assertEqual({'image_url': 'https://example_image.png'}, event.image_content)
             self.assertFalse(event.mobile)
             counter()
 
