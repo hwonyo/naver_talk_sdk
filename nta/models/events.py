@@ -1,4 +1,5 @@
 #-*- encoding:utf-8 -*-
+from .template import *
 from .base import Base
 
 class Event(Base):
@@ -134,11 +135,14 @@ class EchoEvent(Event):
     """
     EchoEvent
     """
-    def __init__(self, echoed_event, **kwargs):
+    def __init__(self, echoed_event, text_content=None, image_content=None, composite_content=None, **kwargs):
         super(EchoEvent, self).__init__(**kwargs)
 
         self.event = 'echo'
         self.echoed_event = echoed_event
+        self.text_content = text_content
+        self.image_content = image_content
+        self.composite_content = composite_content
 
 
 class PayCompleteEvent(Event):

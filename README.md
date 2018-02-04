@@ -258,6 +258,9 @@ def echo_handler_function(event):
     user_id = event.user_id
     mobile = event.mobile # bool: 모바일 사용 여부
     standby = event.standby # bool: 상담사와 연결된 경우 True
+    text_content = event.text_content # dict: text_content or None
+    image_content = event.image_content # dict: image_content or None
+    composite_content = event.composite_content # dict: composite_content or None
     pass
 ```
 #### __@handle_handover__
