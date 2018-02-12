@@ -71,7 +71,6 @@ class ProfilePayload(Payload):
         }
 
 
-
 class ImageUploadPayload(Payload):
     """
     ImageUpload Payload
@@ -86,20 +85,19 @@ class ImageUploadPayload(Payload):
 
         self.image_url = image_url
 
+
 class ThreadPayload(Payload):
     """
     Thread Payload
     """
-    def __init__(self, partner, control, **kwargs):
+    def __init__(self, control, **kwargs):
         """__init__ method
 
         Args:
-            - partner: partner id
             - control: "takeThread" or "passThread"
         """
         super(ThreadPayload, self).__init__(**kwargs)
         self.event = 'handover'
-        self.partner = partner
         self.options = {
             'control': control,
         }
@@ -107,6 +105,7 @@ class ThreadPayload(Payload):
             self.options['metadata'] = ""
         if control == 'passThread':
             self.options['target_id'] = 1
+
 
 class ActionPayload(Payload):
     """

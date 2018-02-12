@@ -41,7 +41,6 @@ class TestNaverTalkAPI(unittest.TestCase):
                 {
                     'event': 'handover',
                     'user': 'test_user_id',
-                    'partner': 'test_partner',
                     'options': {
                         "control": "takeThread",
                         "metadata": ""
@@ -52,7 +51,6 @@ class TestNaverTalkAPI(unittest.TestCase):
 
         self.tested.take_thread(
             user_id='test_user_id',
-            partner='test_partner',
             callback=test_callback
         )
         self.assertEqual(counter.call_count, 1)
@@ -79,7 +77,6 @@ class TestNaverTalkAPI(unittest.TestCase):
                 {
                     'event': 'handover',
                     'user': 'test_user_id',
-                    'partner': 'test_partner',
                     'options': {
                         "control": "passThread",
                         "targetId": 1
@@ -90,7 +87,6 @@ class TestNaverTalkAPI(unittest.TestCase):
 
         self.tested.pass_thread(
             user_id='test_user_id',
-            partner='test_partner',
             callback=test_callback
         )
         self.assertEqual(counter.call_count, 1)
