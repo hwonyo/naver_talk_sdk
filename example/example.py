@@ -198,7 +198,7 @@ def thread_pass(event):
     user_id = event.user_id
     ntalk.pass_thread(
         user_id=user_id,
-        partner="wc4qdz"
+        partner="WC4QDZ"
     )
     ntalk.send(
         user_id,
@@ -213,7 +213,7 @@ def thread_take(event):
     user_id = event.user_id
     ntalk.take_thread(
         user_id=user_id,
-        partner="wc4qdz"
+        partner="WC4QDZ"
     )
     ntalk.send(
         user_id,
