@@ -204,7 +204,7 @@ class NaverTalkApi(object):
 
         self._send(payload, callback=callback, response_form=NaverTalkImageResponse)
 
-    def take_thread(self, user_id, partner, callback=None):
+    def take_thread(self, user_id, callback=None):
         """
         take thread from partner for a user's conversation with user_id
 
@@ -215,13 +215,12 @@ class NaverTalkApi(object):
         """
         payload = ThreadPayload(
             user=user_id,
-            partner=partner,
             control="takeThread"
         )
 
         self._send(payload, callback=callback)
 
-    def pass_thread(self, user_id, partner, callback=None):
+    def pass_thread(self, user_id, callback=None):
         """
         pass thread to partner for a user's conversation with user_id
 
@@ -232,7 +231,6 @@ class NaverTalkApi(object):
         """
         payload = ThreadPayload(
             user=user_id,
-            partner=partner,
             control="passThread"
         )
 
