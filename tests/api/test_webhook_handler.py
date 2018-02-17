@@ -380,6 +380,25 @@ class TestNaverTalkApi(unittest.TestCase):
         self.tested.webhook_handler(json.dumps(event2))
         self.assertEqual(counter1.call_count, 1)
 
+        event3 = {
+            'event': 'send',
+            'user': 'test_user_id',
+            'textContent': {
+                'text': 'test_text',
+                'code': '1',
+                'inputType': 'typing'
+            }
+        }
+
+        counter3 = mock.MagicMock()
+        @self.tested.callback(['1', '2', '3'])
+        def callback_handler(event):
+            self.assertEqual('1', event.code)
+            counter3()
+
+        self.tested.webhook_handler(json.dumps(event3))
+        self.assertEqual(counter3.call_count, 1)
+
     def test_unknown_event(self):
         event = {
             'event': 'unknown'
