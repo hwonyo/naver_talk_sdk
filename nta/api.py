@@ -328,6 +328,7 @@ class NaverTalkApi(object):
                 raise ValueError("Callback params must be List")
             for arg in args[0]:
                 self._button_callbacks[arg] = func
+                self._button_callbacks_key_regex[arg] = re.compile(arg + '$')
 
         if not callable(args[0]):
             return wrapper
@@ -346,8 +347,6 @@ class NaverTalkApi(object):
         """
         callbacks = []
         for key in self._button_callbacks.keys():
-            if key not in self._button_callbacks_key_regex:
-                self._button_callbacks_key_regex[key] = re.compile(key + '$')
             if self._button_callbacks_key_regex[key].match(code):
                 callbacks.append(self._button_callbacks[key])
 
