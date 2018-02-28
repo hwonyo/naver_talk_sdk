@@ -130,3 +130,14 @@ class ButtonPay(Buttons):
         self.data = {
             'payment_info': payment_info
         }
+
+
+class ButtonNested(Buttons):
+    def __init__(self, title, menus, **kwargs):
+        super(ButtonNested, self).__init__(**kwargs)
+
+        self.type = 'NESTED'
+        self.data = {
+            'title': title,
+            'menus': menus
+        }

@@ -4,7 +4,7 @@ from __future__ import unicode_literals, absolute_import
 import unittest
 
 from nta.models import (
-    Buttons, ButtonText, ButtonPay, ButtonLink, ButtonOption,
+    Buttons, ButtonText, ButtonPay, ButtonLink, ButtonOption, ButtonNested,
     PaymentInfo, ProductItem
 )
 
@@ -138,6 +138,36 @@ class TestNaverTalkApi(unittest.TestCase):
                 }
             }
         )
+
+    def test_button_nested(self):
+        target = {
+			"type":"NESTED",
+			"data":{
+				"title":"공지사항",
+				"menus":
+				[{
+					"type":"LINK",
+					"data":{
+						"title":"교환/환불 안내",
+						"url":"http://your-pc-url.com/guide",
+						"mobileUrl":"http://your-mobile-url.com/guide"
+					}
+				}]
+			}
+        }
+        btn = ButtonNested(
+            title='공지사항',
+            menus=[
+                ButtonLink(
+                    title='교환/환불 안내',
+                    url='http://your-pc-url.com/guide',
+                    mobile_url='http://your-mobile-url.com/guide'
+                )
+            ]
+        )
+
+        self.assertEqual(btn, target)
+
 
 
 if __name__ == '__main__':
