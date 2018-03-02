@@ -42,8 +42,12 @@ class Base(object):
         """
         Return dictionary from this object.
         """
+        return self.convert_dict_to_camel_case(self.__dict__)
+
+    @classmethod
+    def convert_dict_to_camel_case(cls, d):
         data = {}
-        for key, sub_obj in self.__dict__.items():
+        for key, sub_obj in d.items():
             camel_key = utils.to_camel_case(key)
             if isinstance(sub_obj, (list, tuple, set)):
                 data[camel_key] = list()
@@ -51,12 +55,12 @@ class Base(object):
                     if hasattr(obj, 'as_json_dict'):
                         data[camel_key].append(obj.as_json_dict())
                     elif isinstance(obj, dict):
-                        data[camel_key].append(self.convert_dict_to_camel_case(obj))
+                        data[camel_key].append(cls.convert_dict_to_camel_case(obj))
                     else:
                         data[camel_key].append(obj)
 
             elif isinstance(sub_obj, dict):
-                data[camel_key] = self.convert_dict_to_camel_case(sub_obj)
+                data[camel_key] = cls.convert_dict_to_camel_case(sub_obj)
 
             elif hasattr(sub_obj, 'as_json_dict'):
                 data[camel_key] = sub_obj.as_json_dict()
@@ -65,19 +69,6 @@ class Base(object):
                 data[camel_key] = sub_obj
 
         return data
-
-    @classmethod
-    def convert_dict_to_camel_case(cls, d):
-        new_d = {}
-        for key, v in d.items():
-            camel_key = utils.to_camel_case(key)
-            if hasattr(v, 'as_json_dict'):
-                new_d[camel_key] = v.as_json_dict()
-            elif isinstance(v, dict):
-                new_d[camel_key] = cls.convert_dict_to_camel_case(v)
-            else:
-                new_d[camel_key] = v
-        return new_d
 
     @classmethod
     def new_from_json_dict(cls, data):
