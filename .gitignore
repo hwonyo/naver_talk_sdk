@@ -13,3 +13,4 @@ py36/
 /dist
 /example/**
 !/example/example.py
+!/example/persistent_menu_example.py
