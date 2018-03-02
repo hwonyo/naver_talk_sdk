@@ -1,5 +1,4 @@
 #-*- encoding:utf-8 -*-
-from .template import *
 from .base import Base
 
 class Event(Base):
@@ -24,6 +23,7 @@ class Event(Base):
     @property
     def mobile(self):
         return self.options.get('mobile')
+
 
 class OpenEvent(Event):
     """

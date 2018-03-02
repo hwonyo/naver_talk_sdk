@@ -122,3 +122,11 @@ class ActionPayload(Payload):
         self.options = {
             "action": action
         }
+
+
+class PersistentMenuPayload(Base):
+    def __init__(self, menus, **kwargs):
+        super(PersistentMenuPayload, self).__init__(**kwargs)
+
+        self.event = 'persistentMenu'
+        self.menu_content = [Menus(menus=menus)]
