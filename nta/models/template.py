@@ -159,3 +159,10 @@ class ProductItem(Base):
         self.end_date = end_date
         self.seller_id = seller_id
         self.count = count
+
+
+class Menus(Base):
+    def __init__(self, menus, **kwargs):
+        super(Menus, self).__init__(**kwargs)
+
+        self.menus = menus
