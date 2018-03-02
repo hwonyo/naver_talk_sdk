@@ -267,7 +267,7 @@ class NaverTalkApi(object):
 
         self._send(payload, callback=callback)
 
-    def persistent_menu(self, menus, callback=None):
+    def persistent_menu(self, menus=None, callback=None):
         """
         enroll persistent menu.
 
