@@ -106,3 +106,29 @@ class TestNaverTalkAPI(unittest.TestCase):
             callback=test_callback
         )
         self.assertEqual(counter.call_count, 1)
+
+    @responses.activate
+    def test_persistent_menu_with_None(self):
+        responses.add(
+            responses.POST,
+            NaverTalkApi.DEFAULT_API_ENDPOINT,
+            json={
+                "success": True,
+                "resultCode": "00"
+            },
+            status=200
+        )
+
+        counter = mock.MagicMock()
+        def test_callback(res, payload):
+            self.assertEqual(
+                payload,
+                {
+                    "event": "persistentMenu",
+                    "menuContent": []
+                }
+            )
+            counter()
+
+        self.tested.persistent_menu(callback=test_callback)
+        self.assertEqual(counter.call_count, 1)

@@ -76,3 +76,13 @@ class TestNaverTalkPayload(unittest.TestCase):
             ]
         )
         self.assertEqual(target, payload)
+
+    def test_persistent_menu_with_None(self):
+        payload = PersistentMenuPayload()
+        self.assertEqual(
+            payload,
+            {
+                "event":"persistentMenu",
+                "menuContent" : []
+            }
+        )
