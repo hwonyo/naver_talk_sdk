@@ -125,8 +125,10 @@ class ActionPayload(Payload):
 
 
 class PersistentMenuPayload(Base):
-    def __init__(self, menus, **kwargs):
+    def __init__(self, menus=None, **kwargs):
         super(PersistentMenuPayload, self).__init__(**kwargs)
 
         self.event = 'persistentMenu'
-        self.menu_content = [Menus(menus=menus)]
+        self.menu_content = []
+        if menus is not None:
+            self.menu_content = [Menus(menus=menus)]
