@@ -12,7 +12,10 @@ import json
 
 from .exceptions import NaverTalkApiError, NaverTalkApiConnectionError
 from .models.responses import NaverTalkResponse, NaverTalkImageResponse
-from .models.payload import ProfilePayload, GenericPayload, ImageUploadPayload, ThreadPayload, ActionPayload
+from .models.payload import (
+    ProfilePayload, GenericPayload, ImageUploadPayload, ThreadPayload, ActionPayload,
+    PersistentMenuPayload
+)
 from .models.events import *
 
 from .utils import LOGGER, PY3, _byteify
@@ -261,6 +264,17 @@ class NaverTalkApi(object):
             user=user_id,
             action="typingOff"
         )
+
+        self._send(payload, callback=callback)
+
+    def persistent_menu(self, menus, callback=None):
+        """
+        enroll persistent menu.
+
+        Args:
+            - menus: List of Buttons
+        """
+        payload = PersistentMenuPayload(menus)
 
         self._send(payload, callback=callback)
 
