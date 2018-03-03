@@ -4,7 +4,7 @@ from __future__ import unicode_literals, absolute_import
 import unittest
 
 from nta.models import (
-    Buttons, ButtonText, ButtonPay, ButtonLink, ButtonOption, ButtonNested,
+    Buttons, ButtonText, ButtonPay, ButtonLink, ButtonOption, ButtonNested, ButtonTime,
     PaymentInfo, ProductItem
 )
 
@@ -167,6 +167,21 @@ class TestNaverTalkApi(unittest.TestCase):
         )
 
         self.assertEqual(btn, target)
+
+    def test_time_button(self):
+        target = {
+            "type": "TIME",
+            "data": {
+                "title": "타이틀",
+                "code": "코드"
+            }
+        }
+        btn = ButtonTime(
+            title='타이틀',
+            code='코드'
+        )
+        self.assertEqual(target, btn)
+
 
 
 
