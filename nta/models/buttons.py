@@ -141,3 +141,14 @@ class ButtonNested(Buttons):
             'title': title,
             'menus': menus
         }
+
+
+class ButtonTime(Buttons):
+    def __init__(self, title, code, **kwargs):
+        super(ButtonTime, self).__init__(**kwargs)
+
+        self.type = 'TIME'
+        self.data = {
+            'title': title,
+            'code': code
+        }
