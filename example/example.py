@@ -115,8 +115,28 @@ def carview_show(event):
                         Button.ButtonLink('네이버 파트너 센터', 'https://partner.talk.naver.com/'),
                         Button.ButtonText('ElementList 카드뷰', 'ElementListCardView')
                     ]
+                ),
+                Template.Composite(
+                    title='세번째 카드 리스트',
+                    description='1. Time Component',
+                    button_list=[
+                        Button.ButtonTime('시간을 눌러봅시다.', code='Time_Test')
+                    ]
                 )
             ]
+        )
+    )
+
+
+@ntalk.callback(['Time_Test'])
+def time_component_handler(event):
+    user_id = event.user_id
+    text = event.text
+    ntalk.send(
+        user_id,
+        '선택하신 시간은 {} 이군요'.format(text),
+        quick_reply=Template.QuickReply(
+            [Button.ButtonText('카드뷰 보기', 'CardView')]
         )
     )
 
