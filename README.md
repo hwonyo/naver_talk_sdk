@@ -42,6 +42,7 @@ __Inspired By : [fbmq](https://github.com/conbus/fbmq) and [line-bot-sdk](https:
       - [pass_thread](#pass_threadself-user_id-callbacknone)
       - [typing_on](#typing_onself-user_id-callbacknone)
       - [typing_off](#typing_offself-user_id-callbacknone)
+      - [persistent_menu](#persistent_menuself-menus-callbacknone)
   - [Template](#template)
     - [TextContent](#textcontent)
     - [ImageContent](#imagecontent)
@@ -56,6 +57,8 @@ __Inspired By : [fbmq](https://github.com/conbus/fbmq) and [line-bot-sdk](https:
     - [ButtonText](#buttontext)
     - [ButtonLink](#buttonlink)
     - [ButtonOption](#buttonoption)
+    - [ButtonTime](#buttontime)
+    - [ButtonNested](#buttonnested)
   - [Exception](#exception)
     - [NaverTalkApiError](#navertalkapierror)
     - [NaverTalkApiConnectionError](#navertalkapiconnectionerror)
@@ -414,6 +417,14 @@ ntalk.typing_on(user_id)
 ntalk.typing_off(user_id)
 ```
 
+### __persistent_menu(self, menus, callback=None)__
+
+- menus: `<type list>`  고정메뉴에 보여질 버튼 ( ButtonOption is not allowed )
+- [자세한 정보](https://github.com/navertalk/chatbot-api#persistentmenu-%EC%9D%B4%EB%B2%A4%ED%8A%B8)
+```python
+ntalk.persistent_menu(menus=[Button.ButtonText(...), Button.ButtonLink(...), ...])
+```
+
 ## Template
 
 ```python
@@ -603,6 +614,35 @@ Button.ButtonLink(
 ```python
 Button.ButtonOption("title showed up", button_list=[Button.ButtonText(...), ...])
 ```
+
+### ButtonTime
+> __init__(self, title, code, **kwargs)
+
+- title: 노출되는 텍스트
+- code: 버튼의 코드값
+- 자세한 정보 [ButtonTime](https://github.com/navertalk/chatbot-api/blob/master/time_component_v1.md)
+```python
+Button.ButtonTime("title showed up", code='Time_Test')
+
+# Use callback regex matching makes it easy to use
+# example callback handler below.
+ntalk.callback(['Time_Test'])
+def time_test_handler(event):
+    # event.title: user selected time
+    pass
+```
+
+### ButtonNested
+> __init__(self, title, menus, **kwargs)
+
+- 고정 메뉴에 사용되는 버튼이다. 버튼을 누르면 숨겨진 버튼이 보여진다.
+- title: 노출되는 텍스트
+- menus: `<type list>` 버튼 리스트
+- 자세한 정보 [ButtonNested](https://github.com/navertalk/chatbot-api#menudata-objectnested-%ED%83%80%EC%9E%85)
+```python
+Button.ButtonNested("title showed up", menus=[Button.ButtonText(...), Button.ButtonLink(...), ...]
+```
+
 ## Exception
 ```python
 from nta.exceptions import (
