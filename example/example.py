@@ -120,7 +120,16 @@ def carview_show(event):
                     title='세번째 카드 리스트',
                     description='1. Time Component',
                     button_list=[
-                        Button.ButtonTime('시간을 눌러봅시다.', code='Time_Test')
+                        Button.ButtonTime('시간을 눌러봅시다.', code='Time_Test'),
+                        Button.ButtonCalendar(
+                            '날짜를 선택해봅시다.',
+                            code='Calendar_Test',
+                            placeholder='글자 수 제한이 있을까? 이 친구는 5월만 고를 수 있어. 또 일요일은 빼자',
+                            start='20180501',
+                            end='20180531',
+                            disables='0'
+
+                        )
                     ]
                 )
             ]
@@ -137,6 +146,29 @@ def time_component_handler(event):
         '선택하신 시간은 {} 이군요'.format(text),
         quick_reply=Template.QuickReply(
             [Button.ButtonText('카드뷰 보기', 'CardView')]
+        )
+    )
+
+
+@ntalk.callback(['Calendar_Test'])
+def calendar_handler(event):
+    user_id = event.user_id
+    text = event.text
+    ntalk.send(
+        user_id,
+        '선택하신 날짜는 {} 이군요.'.format(text),
+        quick_reply=Template.QuickReply(
+            [
+                Button.ButtonText('카드뷰 보기', 'CardView'),
+                Button.ButtonCalendar(
+                    title='날짜 다시 선택하기',
+                    code='Calendar_Test',
+                    placeholder='다시 선택 하는 거다',
+                    start='20180305',
+                    end='20180417',
+                    disables="1"
+                )
+             ]
         )
     )
 
