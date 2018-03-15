@@ -13,7 +13,7 @@ from nta import (
 )
 from nta.models import(
     CompositeContent, Composite, ElementData, ElementList,
-    ButtonText, ButtonLink, QuickReply
+    ButtonText, ButtonLink, ButtonCalendar, QuickReply
 )
 
 
@@ -193,3 +193,79 @@ class TestNaverTalkAPI(unittest.TestCase):
             callback=test_callback
         )
         self.assertEqual(counter.call_count, 2)
+
+    @responses.activate
+    def test_composite_with_calendar(self):
+        responses.add(
+            responses.POST,
+            NaverTalkApi.DEFAULT_API_ENDPOINT,
+            json={
+                "success": True,
+                "resultCode": "00"
+            },
+            status=200
+        )
+
+        counter = mock.MagicMock()
+
+        def test_callback(res, payload):
+            target = {
+                "event": "send",
+                "user": "test_user_id",
+                "compositeContent": {
+                    "compositeList": [
+                        {
+                            "title": "톡톡 레스토랑",
+                            "description": "파스타가 맛있는집",
+                            'elementList': None,
+                            "buttonList": [
+                                {
+                                    "type": "CALENDAR",
+                                    "data": {
+                                        "title": "방문 날짜 선택하기",
+                                        "code": "code_for_your_bot",
+                                        "options": {
+                                            "calendar": {
+                                                "placeholder": "방문 날짜를 선택해주세요.",
+                                                "start": "20180301",
+                                                "end": "20180430",
+                                                "disables": "1,20180309,20180315-20180316"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                },
+                'options': {
+                    'notification': False
+                }
+            }
+            self.assertEqual(target, payload.as_json_dict())
+            counter()
+
+        self.tested.send(
+            "test_user_id",
+            message=CompositeContent(
+                composite_list=[
+                    Composite(
+                        title= "톡톡 레스토랑",
+                        description="파스타가 맛있는집",
+                        button_list=[
+                            ButtonCalendar(
+                                title="방문 날짜 선택하기",
+                                code="code_for_your_bot",
+                                placeholder="방문 날짜를 선택해주세요.",
+                                start="20180301",
+                                end="20180430",
+                                disables="1,20180309,20180315-20180316"
+                            )
+                        ]
+                    )
+
+                ]
+            ),
+            callback=test_callback
+        )
+        self.assertEqual(counter.call_count, 1)
