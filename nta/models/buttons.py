@@ -152,3 +152,22 @@ class ButtonTime(Buttons):
             'title': title,
             'code': code
         }
+
+
+class ButtonCalendar(Buttons):
+    def __init__(self, title=None, code=None, placeholder=None, start=None, end=None, disables=None, **kwargs):
+        super(ButtonCalendar, self).__init__(**kwargs)
+
+        self.type = 'CALENDAR'
+        self.data = {
+            'title': title,
+            'code': code,
+            'options':{
+                'calendar': {
+                    'placeholder': placeholder,
+                    'start': start,
+                    'end': end,
+                    'disables': disables
+                }
+            }
+        }
