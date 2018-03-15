@@ -4,7 +4,7 @@ from __future__ import unicode_literals, absolute_import
 import unittest
 
 from nta.models import (
-    Buttons, ButtonText, ButtonPay, ButtonLink, ButtonOption, ButtonNested, ButtonTime,
+    Buttons, ButtonText, ButtonPay, ButtonLink, ButtonOption, ButtonNested, ButtonTime, ButtonCalendar,
     PaymentInfo, ProductItem
 )
 
@@ -182,7 +182,31 @@ class TestNaverTalkApi(unittest.TestCase):
         )
         self.assertEqual(target, btn)
 
-
+    def test_calendar_button(self):
+        target = {
+            "type": "CALENDAR",
+            "data": {
+                "title": "방문 날짜 선택하기",
+                "code": "code_for_your_bot",
+                "options": {
+                    "calendar": {
+                        "disables": "1,20180309,20180315-20180316",
+                        "end": "20180430",
+                        "placeholder": "방문 날짜를 선택해주세요.",
+                        "start": "20180301",
+                    }
+                }
+            }
+        }
+        btn = ButtonCalendar(
+            title= "방문 날짜 선택하기",
+            code= "code_for_your_bot",
+            placeholder="방문 날짜를 선택해주세요.",
+            start="20180301",
+            end="20180430",
+            disables="1,20180309,20180315-20180316"
+        )
+        self.assertEqual(target, btn)
 
 
 if __name__ == '__main__':
