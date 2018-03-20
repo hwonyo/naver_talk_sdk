@@ -128,11 +128,27 @@ def carview_show(event):
                             start='20180501',
                             end='20180531',
                             disables='0'
-
+                        ),
+                        Button.ButtonTimeInterval(
+                            '시간을 선택해봅시다.',
+                            code='TimeInterval_test'
                         )
                     ]
                 )
             ]
+        )
+    )
+
+
+@ntalk.callback(['TimeInterval_test'])
+def time_interval_handler(event):
+    user_id = event.user_id
+    text = event.text
+    ntalk.send(
+        user_id,
+        '선택하신 시간은 {} 입니다.'.format(text),
+        quick_reply=Template.QuickReply(
+            [Button.ButtonText('카드뷰 보기', 'CardView')]
         )
     )
 
