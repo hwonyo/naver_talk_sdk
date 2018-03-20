@@ -60,6 +60,7 @@ __Inspired By : [fbmq](https://github.com/conbus/fbmq) and [line-bot-sdk](https:
     - [ButtonTime](#buttontime)
     - [ButtonNested](#buttonnested)
     - [ButtonCalendar](#buttoncalendar)
+    - [ButtonTimeInterval](#buttontimeinterval)
   - [Exception](#exception)
     - [NaverTalkApiError](#navertalkapierror)
     - [NaverTalkApiConnectionError](#navertalkapiconnectionerror)
@@ -653,10 +654,24 @@ Button.ButtonNested("title showed up", menus=[Button.ButtonText(...), Button.But
 - palceholder: Webview title.
 - start: start date.
 - end: end date.
-- disalbes: date to disable.
+- disalbes(Str): date to disable.
 - More Info See [ButtonCalnedar](https://github.com/navertalk/chatbot-api/blob/master/calendar_component_v1.md)
 ```python
 Button.ButtonCalnedar(title="title showed up", code="hidden code", ...)
+```
+
+### ButtonTimeInterval
+> __init__(self, title=None, code=None, start=None, end=None, interval=None, disables=None, **kwargs)
+
+- Choose time with selections.
+- title: Exposed to button.
+- code: Hidden code in button.
+- start: start time.
+- end: end time.
+- disables(Str): time period to disable.
+- More Info See [ButtonTimeInterval](https://github.com/navertalk/chatbot-api/blob/master/time_interval_component_v1.md)
+```python
+Button.ButtonTimeInterval(title="title showed up", code="hidden code", ...)
 ```
 
 ## Exception
