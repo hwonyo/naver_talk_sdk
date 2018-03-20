@@ -2,7 +2,7 @@
 Meta data for naver-talk-sdk
 """
 
-__version__ = '1.0.3'
+__version__ = '1.0.4'
 __author__ = 'WonYoHwang'
 __license__ = 'MIT'
 
