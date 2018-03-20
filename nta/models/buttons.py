@@ -171,3 +171,22 @@ class ButtonCalendar(Buttons):
                 }
             }
         }
+
+
+class ButtonTimeInterval(Buttons):
+    def __init__(self, title=None, code=None, start=None, end=None, interval=None, disables=None ,**kwargs):
+        super(ButtonTimeInterval, self).__init__(**kwargs)
+
+        self.type = 'TIMEINTERVAL'
+        self.data = {
+            'title': title,
+            'code': code,
+            'options': {
+                'timeInterval': {
+                    'start': start,
+                    'end': end,
+                    'interval': interval,
+                    'disables': disables
+                }
+            }
+        }
