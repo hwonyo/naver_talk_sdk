@@ -5,6 +5,7 @@ import unittest
 
 from nta.models import (
     Buttons, ButtonText, ButtonPay, ButtonLink, ButtonOption, ButtonNested, ButtonTime, ButtonCalendar,
+    ButtonTimeInterval,
     PaymentInfo, ProductItem
 )
 
@@ -208,6 +209,32 @@ class TestNaverTalkApi(unittest.TestCase):
         )
         self.assertEqual(target, btn)
 
+    def test_time_interval(self):
+        target = {
+            "type": "TIMEINTERVAL",
+            "data": {
+                "title": "방문 시간 선택하기",
+                "code": "code_for_your_bot",
+                "options": {
+                    "timeInterval": {
+                        "start": "0900",
+                        "end": "2200",
+                        "interval": "15",
+                        "disables": "1000,1115-1130,1200,1400-1430"
+                    }
+                }
+            }
+        }
+        btn = ButtonTimeInterval(
+            title="방문 시간 선택하기",
+            code="code_for_your_bot",
+            start="0900",
+            end="2200",
+            interval="15",
+            disables="1000,1115-1130,1200,1400-1430"
+        )
+        print(btn)
+        self.assertEqual(target, btn)
 
 if __name__ == '__main__':
     unittest.main()
