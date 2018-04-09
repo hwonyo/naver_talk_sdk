@@ -14,7 +14,7 @@ from .exceptions import NaverTalkApiError, NaverTalkApiConnectionError
 from .models.responses import NaverTalkResponse, NaverTalkImageResponse
 from .models.payload import (
     ProfilePayload, GenericPayload, ImageUploadPayload, ThreadPayload, ActionPayload,
-    PersistentMenuPayload
+    PersistentMenuPayload, ProductMessage
 )
 from .models.events import *
 
@@ -275,6 +275,22 @@ class NaverTalkApi(object):
             - menus: List of Buttons
         """
         payload = PersistentMenuPayload(menus)
+
+        self._send(payload, callback=callback)
+
+    def product_message(self, user_id, ids, display_type=None, callback=None):
+        """
+        show product message
+
+        Args:
+             - ids: List of Product ids.
+             - display_type: list | single
+        """
+        payload = ProductMessage(
+            user=user_id,
+            ids=ids,
+            display_type=display_type
+        )
 
         self._send(payload, callback=callback)
 
