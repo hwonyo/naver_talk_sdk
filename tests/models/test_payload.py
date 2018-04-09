@@ -3,9 +3,7 @@ from __future__ import unicode_literals, absolute_import
 
 import unittest
 
-from nta.models.payload import (
-    PersistentMenuPayload
-)
+from nta.models.payload import *
 from nta import Button
 
 class TestNaverTalkPayload(unittest.TestCase):
@@ -84,5 +82,25 @@ class TestNaverTalkPayload(unittest.TestCase):
             {
                 "event":"persistentMenu",
                 "menuContent" : []
+            }
+        )
+
+    def test_product_message(self):
+        payload = ProductMessage(
+            user='test_user_id',
+            ids=[
+                1,2,3
+            ],
+            display_type='list'
+        )
+        self.assertEqual(
+            payload,
+            {
+                'event': 'product',
+                'user': 'test_user_id',
+                'options': {
+                    'ids':[1, 2, 3],
+                    'displayType': 'list'
+                }
             }
         )
