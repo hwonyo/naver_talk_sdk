@@ -12,6 +12,7 @@ from .payload import (
     ThreadPayload,
     ActionPayload,
     PersistentMenuPayload,
+    ProductMessage,
 )
 from .buttons import (
     ButtonLink,
