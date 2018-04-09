@@ -134,9 +134,30 @@ def carview_show(event):
                             code='TimeInterval_test'
                         )
                     ]
+                ),
+                Template.Composite(
+                    title='네번째 카드 리스트',
+                    description='New Payload !',
+                    button_list=[
+                        Button.ButtonText('Product Message 보기', 'SHOW_PRODUCT_MESSAGE')
+                    ]
                 )
             ]
         )
+    )
+
+
+@ntalk.callback(['SHOW_PRODUCT_MESSAGE'])
+def product_message_handler(event):
+    user_id = event.user_id
+    ntalk.product_message(
+        user_id,
+        ids=[
+            12345,
+            12344,
+            12343
+        ],
+        display_type='list'
     )
 
 
