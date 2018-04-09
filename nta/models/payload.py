@@ -132,3 +132,23 @@ class PersistentMenuPayload(Base):
         self.menu_content = []
         if menus is not None:
             self.menu_content = [Menus(menus=menus)]
+
+
+class ProductMessage(Payload):
+    """
+    Prduct Payload for prduct message
+    """
+    def __init__(self, ids, display_type='single', **kwargs):
+        """__init__ method.
+
+        Args:
+            - ids: list of product numbers
+            - display_type: single or list. default is single
+        """
+        super(ProductMessage, self).__init__(**kwargs)
+
+        self.event = 'product'
+        self.options = {
+            'ids': ids,
+            'displayType': display_type
+        }
