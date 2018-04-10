@@ -309,6 +309,12 @@ def thread_take(event):
     )
 
 
+@ntalk.callback(['PersistentMenu'])
+def persistent_menu_handler(event):
+    user_id = event.user_id
+    ntalk.send(user_id, "고정메뉴를 건드렸구나")
+
+
 @ntalk.callback(['Profile'])
 def show_profile(event):
     user_id = event.user_id
