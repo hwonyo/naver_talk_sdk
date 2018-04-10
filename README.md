@@ -43,6 +43,7 @@ __Inspired By : [fbmq](https://github.com/conbus/fbmq) and [line-bot-sdk](https:
       - [typing_on](#typing_onself-user_id-callbacknone)
       - [typing_off](#typing_offself-user_id-callbacknone)
       - [persistent_menu](#persistent_menuself-menus-callbacknone)
+      - [prdouct_message](#product_messageself-user_id-ids-displaytypesingle-callbacknone)
   - [Template](#template)
     - [TextContent](#textcontent)
     - [ImageContent](#imagecontent)
@@ -426,6 +427,17 @@ ntalk.typing_off(user_id)
 ```python
 ntalk.persistent_menu(menus=[Button.ButtonText(...), Button.ButtonLink(...), ...])
 ```
+
+### __product_message(self, user_id, ids, displayType='single', callback=None)__
+
+- user_id: 유저 아이디
+- ids: `<type list>` 스토어팜 상품 번호
+- displayType: `<type str>` 'signle' | 'list' 상품이 보여지는 방식. default: 'single'
+- [자세한 정보](https://github.com/navertalk/chatbot-api/blob/master/product_message_api.md)
+```python
+ntalk.product_message(user_id, ids=[...], displayType='list')
+```
+
 
 ## Template
 
