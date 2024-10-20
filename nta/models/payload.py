@@ -22,18 +22,22 @@ class GenericPayload(Payload):
     General Payload
     For Send a message to users.
     """
-    def __init__(self, message, quick_reply=None, notification=False, **kwargs):
+    def __init__(self, message, quick_reply=None, notification=False, read_by_send=False, **kwargs):
         """__init__ method.
 
         Args:
             - message: str or Template.TextContent
             - quick_reply: list of buttons or Template.QuickReply
             - notification: boolean
+            - readBySend: boolean
         """
         super(GenericPayload, self).__init__(**kwargs)
 
         self.event = 'send'
-        self.options = {"notification": notification}
+        self.options = {
+            "notification": notification,
+            "readBySend": read_by_send
+        }
         if isinstance(message, str):
             message = TextContent(message)
         if quick_reply:

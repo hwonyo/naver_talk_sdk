@@ -47,7 +47,8 @@ class TestNaverTalkAPI(unittest.TestCase):
                         'inputType': None
                     },
                     'options': {
-                        'notification': False
+                        'notification': False,
+                        'readBySend': False
                     }
                 }
             )
@@ -92,7 +93,8 @@ class TestNaverTalkAPI(unittest.TestCase):
                     "event": "send",
                     "user": "test_user_id",
                     "options": {
-                        "notification": False
+                        "notification": False,
+                        "readBySend": False
                     },
                     "textContent": {
                         "code": None,

@@ -19,6 +19,7 @@ __Inspired By : [fbmq](https://github.com/conbus/fbmq) and [line-bot-sdk](https:
 ## Table of Contents
 
 * [Install](#install)
+* [Run Unit Test](#Run-Unit-Test)
 * [Synopsis](#synopsis)
 * [API](#api)
   - [NaverTalkApi](#navertalkapi)
@@ -80,9 +81,22 @@ __Inspired By : [fbmq](https://github.com/conbus/fbmq) and [line-bot-sdk](https:
     - [HandOverEvent](#handoverevent)
      
 ## Install
+install as a package
 ```
 pip install nta
 ```
+To run a dev environment 
+```
+pip install -r requirements.txt
+export naver_talk_access_token='your_access_token_here'
+python example/example.py
+```
+
+## Run Unit Test
+```
+python -m unittest
+```
+
 
 ## Synopsis
 Usage (with flask)
@@ -332,6 +346,7 @@ def hello_callback_handler(event):
 - message *Template* or *str*: 전송하고자 하는 메세지
 - quick_reply *Template* or *list*: 빠른 답장
 - notification *bool*: 푸쉬 메세지 설정 
+- readBySend *bool*: 자동 읽음으로 표시 설정
 - callback *func*: callback 함수. 메세지를 보내고 난 뒤에 실행된다.  
 
 #### __Text__
