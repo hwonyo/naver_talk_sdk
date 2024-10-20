@@ -75,7 +75,8 @@ class TestNaverTalkAPI(unittest.TestCase):
                         ]
                     },
                     'options': {
-                        'notification': False
+                        'notification': False,
+                        'readBySend': False
                     }
                 }
             )
@@ -152,7 +153,8 @@ class TestNaverTalkAPI(unittest.TestCase):
 
                     },
                     'options': {
-                        'notification': False
+                        'notification': False,
+                        'readBySend': False
                     }
                 }
             )
@@ -239,7 +241,9 @@ class TestNaverTalkAPI(unittest.TestCase):
                     ]
                 },
                 'options': {
-                    'notification': False
+                    'notification': False,
+                    'readBySend': False
+                    
                 }
             }
             self.assertEqual(target, payload.as_json_dict())

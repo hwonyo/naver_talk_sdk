@@ -29,6 +29,7 @@ class GenericPayload(Payload):
             - message: str or Template.TextContent
             - quick_reply: list of buttons or Template.QuickReply
             - notification: boolean
+            - readBySend: boolean
         """
         super(GenericPayload, self).__init__(**kwargs)
 

@@ -46,7 +46,8 @@ class TestNaverTalkAPI(unittest.TestCase):
                         'imageUrl': 'test.jpg',
                     },
                     'options': {
-                        'notification': False
+                        'notification': False,
+                        'readBySend': False
                     }
                 }
             )
@@ -72,7 +73,8 @@ class TestNaverTalkAPI(unittest.TestCase):
                         'imageId': '1234test',
                     },
                     'options': {
-                        'notification': False
+                        'notification': False,
+                        'readBySend': False
                     }
                 }
             )
@@ -124,7 +126,8 @@ class TestNaverTalkAPI(unittest.TestCase):
                                     'type': 'LINK'}]}
                     },
                     'options': {
-                        'notification': False
+                        'notification': False,
+                        'readBySend': False
                     }
                 }
             )
