@@ -88,6 +88,8 @@ pip install nta
 To run a dev environment 
 ```
 pip install -r requirements.txt
+export naver_talk_access_token='your_access_token_here'
+python example/example.py
 ```
 
 ## Run Unit Test
