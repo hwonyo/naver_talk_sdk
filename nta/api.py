@@ -128,7 +128,7 @@ class NaverTalkApi(object):
             name = event.event
             self._call_handler(name, event)
 
-    def send(self, user_id, message, quick_reply=None, notification=False, read_by_send=False,callback=None):
+    def send(self, user_id, message, quick_reply=None, notification=False, read_by_send=False, callback=None):
         """
         Send a message to user_id with quick_reply or not.
         If notification True, push alarm occurred on user's phone.

@@ -22,7 +22,7 @@ class GenericPayload(Payload):
     General Payload
     For Send a message to users.
     """
-    def __init__(self, message, quick_reply=None, notification=False,read_by_send=False, **kwargs):
+    def __init__(self, message, quick_reply=None, notification=False, read_by_send=False, **kwargs):
         """__init__ method.
 
         Args:
