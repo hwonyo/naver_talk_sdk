@@ -1,4 +1,4 @@
-name: Python CI
+name: Coveralls Coverage
 
 on:
   push:
@@ -33,7 +33,8 @@ jobs:
 
       - name: Run tests
         run: |
-          python -m unittest discover -s tests
+          coverage run -m unittest discover
+          coverage xml
 
       - name: Upload coverage to Coveralls
         if: success()
