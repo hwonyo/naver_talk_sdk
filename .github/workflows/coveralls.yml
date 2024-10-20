@@ -29,6 +29,7 @@ jobs:
         run: |
           pip install mock
           pip install coveralls
+          pip install responses
 
       - name: Run tests
         run: |
