@@ -27,14 +27,12 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install nose
           pip install mock
           pip install coveralls
-          pip install responses
 
       - name: Run tests
         run: |
-          nosetests --with-coverage --cover-package=nta
+          python -m unittest discover -s tests
 
       - name: Upload coverage to Coveralls
         if: success()
