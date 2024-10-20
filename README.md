@@ -81,11 +81,11 @@ __Inspired By : [fbmq](https://github.com/conbus/fbmq) and [line-bot-sdk](https:
     - [HandOverEvent](#handoverevent)
      
 ## Install
-install as package to run
+install as a package
 ```
 pip install nta
 ```
-To run dev environment 
+To run a dev environment 
 ```
 pip install -r requirements.txt
 ```
