@@ -7,14 +7,10 @@ setup.*
 /*.egg-info
 /docs/_build
 Gemfile
-/docs/_build
 
 # virtualenv
 venv/
-py2/
-py36/
 
-/dist
 /example/**
 !/example/example.py
 !/example/persistent_menu_example.py
